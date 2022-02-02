@@ -4,6 +4,7 @@ import Page, { Props } from './index';
 import UnflexibleProvider from '../../UnflexibleProvider';
 import Stacked from '../Stacked';
 import Columns from '../Columns';
+import GridRow from '../GridRow';
 import Block from '../Block';
 import PlainText from '../../element/PlainText';
 import Figure from '../../element/Figure';
@@ -19,7 +20,7 @@ export default {
 
 const Template: Story<Props> = (args) => {
   return (
-    <UnflexibleProvider>
+    <UnflexibleProvider config={{}}>
       <Page {...args} />
     </UnflexibleProvider>
   );
@@ -41,7 +42,7 @@ Primary.args = {
         </Block>
       </Stacked>
 
-      <Stacked wrap>
+      <Stacked wrap color={color.white}>
         <Columns gap="normal" repeatXL={4} repeatM={2}>
           <Block height="75%" fixRatio>
             <Figure src={imageM} name="宇宙飛行士" width="100%" height="100%" />
@@ -65,6 +66,33 @@ Primary.args = {
             <Figure src={imageM} name="宇宙飛行士" width="100%" height="100%" />
           </Block>
         </Columns>
+      </Stacked>
+
+      <Stacked wrap>
+        <GridRow grid="repeat(auto-fit, 25%)" gridM="repeat(auto-fit, 50%)" gap="normal" justify="center">
+          <Block width="100%" height="100%">
+            <PlainText>
+              <h3>タイトル</h3>
+              <p>文章</p>
+            </PlainText>
+          </Block>
+
+          <Block width="100%" height="100%">
+            <PlainText>
+              <h3>タイトル</h3>
+              <p>文章</p>
+              <ul>
+                <li>リスト</li>
+                <li>リスト</li>
+                <li>リスト</li>
+              </ul>
+            </PlainText>
+          </Block>
+
+          <Block width="100%" height="100%">
+            <Figure src={imageM} name="宇宙飛行士" width="100%" height="100%" />
+          </Block>
+        </GridRow>
       </Stacked>
 
       <Stacked color={color.white} wrap>

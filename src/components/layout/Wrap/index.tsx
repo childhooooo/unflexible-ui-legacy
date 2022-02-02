@@ -1,13 +1,22 @@
 import React from 'react';
 import styled from 'styled-components';
 import { screen } from 'lib/config';
+import { Config } from 'components/UnflexibleProvider';
 
-const defaultSizes = {
-  xl: '1240px',
-  l: '1030px',
-  m: '760px',
-  s: '470px',
-  xs: '94%',
+interface ConfigProps {
+  widthXL: string;
+  widthL: string;
+  widthM: string;
+  widthS: string;
+  widthXS: string;
+}
+
+const defaultConfig: ConfigProps = {
+  widthXL: '1240px',
+  widthL: '1030px',
+  widthM: '760px',
+  widthS: '470px',
+  widthXS: '94%',
 };
 
 export interface Props {
@@ -15,28 +24,42 @@ export interface Props {
 }
 
 const Wrap = ({ children }: Props) => {
-  return <Component>{children}</Component>;
+  const context = React.useContext(Config);
+
+  let config: ConfigProps = defaultConfig;
+  if(context.wrap) {
+    config = {
+      ...config,
+      ...context.wrap
+    }
+  }
+
+  return <Component config={config}>{children}</Component>;
 };
 
-const Component = styled.div`
+interface ComponentProps {
+  config: ConfigProps;
+}
+
+const Component = styled.div<ComponentProps>`
   position: relative;
   margin: 0 auto;
-  width: var(--wrap-width-xl, ${defaultSizes.xl});
+  width: ${props => props.config.widthXL};
 
   @media only screen and (max-width: ${screen.l}px) {
-    width: var(--wrap-width-l, ${defaultSizes.l});
+    width: ${props => props.config.widthL};
   }
 
   @media only screen and (max-width: ${screen.m}px) {
-    width: var(--wrap-width-m, ${defaultSizes.m});
+    width: ${props => props.config.widthM};
   }
 
   @media only screen and (max-width: ${screen.s}px) {
-    width: var(--wrap-width-s, ${defaultSizes.s});
+    width: ${props => props.config.widthS};
   }
 
   @media only screen and (max-width: ${screen.xs}px) {
-    width: var(--wrap-width-xs, ${defaultSizes.xs});
+    width: ${props => props.config.widthXS};
   }
 `;
 

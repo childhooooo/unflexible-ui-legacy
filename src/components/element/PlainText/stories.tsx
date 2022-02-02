@@ -9,7 +9,7 @@ export default {
 } as Meta;
 
 const Template: Story<Props> = (args) => (
-  <UnflexibleProvider>
+  <UnflexibleProvider config={{}}>
     <PlainText {...args} />
   </UnflexibleProvider>
 );
