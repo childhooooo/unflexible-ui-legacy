@@ -26,7 +26,7 @@ const config = {
     resolve(),
     commonjs(),
     babel({
-      exclude: ['node_modules/**']
+      exclude: ['node_modules/**'],
     }),
     typescript(),
     postcss({
@@ -34,15 +34,15 @@ const config = {
         require('postcss-flexbugs-fixes'),
         require('postcss-preset-env')({
           autoprefixer: {
-            flexbox: "no-2009"
+            flexbox: 'no-2009',
           },
           stage: 3,
           features: {
-            'custom-properties': true
-          }
-        })
-      ]
-    })
+            'custom-properties': true,
+          },
+        }),
+      ],
+    }),
   ],
 };
 

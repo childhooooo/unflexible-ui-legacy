@@ -8,7 +8,7 @@ module.exports = {
     '@storybook/addon-links',
     '@storybook/addon-viewport',
     '@storybook/addon-postcss',
-    '@storybook/addon-ie11'
+    '@storybook/addon-ie11',
   ],
   typescript: {
     check: false,

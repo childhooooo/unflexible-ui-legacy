@@ -74,42 +74,42 @@ const defaultConfig: ConfigProps = {
     l: '1rem',
     m: '1rem',
     s: '1rem',
-    xs: '1rem'
+    xs: '1rem',
   },
   h1Size: {
     xl: '2.25rem',
     l: '2.25rem',
     m: '2.25rem',
     s: '1.75rem',
-    xs: '1.75rem'
+    xs: '1.75rem',
   },
   h2Size: {
     xl: '2rem',
     l: '2rem',
     m: '2rem',
     s: '1.5rem',
-    xs: '1.5rem'
+    xs: '1.5rem',
   },
   h3Size: {
     xl: '1.5rem',
     l: '1.5rem',
     m: '1.5rem',
     s: '1.25rem',
-    xs: '1.25rem'
+    xs: '1.25rem',
   },
   h4Size: {
     xl: '1.25rem',
     l: '1.25rem',
     m: '1.25rem',
     s: '1.1rem',
-    xs: '1.1rem'
+    xs: '1.1rem',
   },
   h5Size: {
     xl: '1rem',
     l: '1rem',
     m: '1rem',
     s: '1rem',
-    xs: '1rem'
+    xs: '1rem',
   },
   baseWeight: '400',
   h1Weight: '700',
@@ -159,7 +159,7 @@ const defaultConfig: ConfigProps = {
   h3LetterSpacing: '0',
   h4LetterSpacing: '0',
   h5LetterSpacing: '0',
-}
+};
 
 export interface Props {
   text?: string;
@@ -329,10 +329,10 @@ const PlainText = ({
   const context = React.useContext(Config);
 
   let config: ConfigProps = defaultConfig;
-  if(context.plainText) {
+  if (context.plainText) {
     config = {
       ...config,
-      ...context.plainText
+      ...context.plainText,
     };
   }
 
@@ -649,79 +649,131 @@ const Component = styled.div<ComponentProps>`
 
   @media only screen and (max-width: ${screen.m}px) {
     * {
-      font-size: ${(props) => props.h1SizeM || props.h1SizeL || props.h1SizeXL || props.config.baseSize.m};
+      font-size: ${(props) =>
+        props.h1SizeM || props.h1SizeL || props.h1SizeXL || props.config.baseSize.m};
     }
 
     h1 {
-      font-size: ${(props) => props.h2SizeM || props.h2SizeL || props.h2SizeXL || props.config.h1Size.m};
+      font-size: ${(props) =>
+        props.h2SizeM || props.h2SizeL || props.h2SizeXL || props.config.h1Size.m};
     }
 
     h2 {
-      font-size: ${(props) => props.h2SizeM || props.h2SizeL || props.h2SizeXL || props.config.h2Size.m};
+      font-size: ${(props) =>
+        props.h2SizeM || props.h2SizeL || props.h2SizeXL || props.config.h2Size.m};
     }
 
     h3 {
-      font-size: ${(props) => props.h3SizeM || props.h3SizeL || props.h3SizeXL || props.config.h3Size.m};
+      font-size: ${(props) =>
+        props.h3SizeM || props.h3SizeL || props.h3SizeXL || props.config.h3Size.m};
     }
 
     h4 {
-      font-size: ${(props) => props.h4SizeM || props.h4SizeL || props.h4SizeXL || props.config.h4Size.m};
+      font-size: ${(props) =>
+        props.h4SizeM || props.h4SizeL || props.h4SizeXL || props.config.h4Size.m};
     }
 
     h5 {
-      font-size: ${(props) => props.h5SizeM || props.h5SizeL || props.h5SizeXL || props.config.h5Size.m};
+      font-size: ${(props) =>
+        props.h5SizeM || props.h5SizeL || props.h5SizeXL || props.config.h5Size.m};
     }
   }
 
   @media only screen and (max-width: ${screen.s}px) {
     * {
-      font-size: ${(props) => props.h1SizeS || props.h1SizeM || props.h1SizeL || props.h1SizeXL || props.config.baseSize.s};
+      font-size: ${(props) =>
+        props.h1SizeS ||
+        props.h1SizeM ||
+        props.h1SizeL ||
+        props.h1SizeXL ||
+        props.config.baseSize.s};
     }
 
     h1 {
-      font-size: ${(props) => props.h2SizeS || props.h2SizeM || props.h2SizeL || props.h2SizeXL || props.config.h1Size.s};
+      font-size: ${(props) =>
+        props.h2SizeS || props.h2SizeM || props.h2SizeL || props.h2SizeXL || props.config.h1Size.s};
     }
 
     h2 {
-      font-size: ${(props) => props.h2SizeS || props.h2SizeM || props.h2SizeL || props.h2SizeXL || props.config.h2Size.s};
+      font-size: ${(props) =>
+        props.h2SizeS || props.h2SizeM || props.h2SizeL || props.h2SizeXL || props.config.h2Size.s};
     }
 
     h3 {
-      font-size: ${(props) => props.h3SizeS || props.h3SizeM || props.h3SizeL || props.h3SizeXL || props.config.h3Size.s};
+      font-size: ${(props) =>
+        props.h3SizeS || props.h3SizeM || props.h3SizeL || props.h3SizeXL || props.config.h3Size.s};
     }
 
     h4 {
-      font-size: ${(props) => props.h4SizeS || props.h4SizeM || props.h4SizeL || props.h4SizeXL || props.config.h4Size.s};
+      font-size: ${(props) =>
+        props.h4SizeS || props.h4SizeM || props.h4SizeL || props.h4SizeXL || props.config.h4Size.s};
     }
 
     h5 {
-      font-size: ${(props) => props.h5SizeS || props.h5SizeM || props.h5SizeL || props.h5SizeXL || props.config.h5Size.s};
+      font-size: ${(props) =>
+        props.h5SizeS || props.h5SizeM || props.h5SizeL || props.h5SizeXL || props.config.h5Size.s};
     }
   }
 
   @media only screen and (max-width: ${screen.xs}px) {
     * {
-      font-size: ${(props) => props.h1SizeXS || props.h1SizeS || props.h1SizeM || props.h1SizeL || props.h1SizeXL || props.config.baseSize.xs};
+      font-size: ${(props) =>
+        props.h1SizeXS ||
+        props.h1SizeS ||
+        props.h1SizeM ||
+        props.h1SizeL ||
+        props.h1SizeXL ||
+        props.config.baseSize.xs};
     }
 
     h1 {
-      font-size: ${(props) => props.h1SizeXS || props.h1SizeS || props.h1SizeM || props.h1SizeL || props.h1SizeXL || props.config.h1Size.xs};
+      font-size: ${(props) =>
+        props.h1SizeXS ||
+        props.h1SizeS ||
+        props.h1SizeM ||
+        props.h1SizeL ||
+        props.h1SizeXL ||
+        props.config.h1Size.xs};
     }
 
     h2 {
-      font-size: ${(props) => props.h2SizeXS || props.h2SizeS || props.h2SizeM || props.h2SizeL || props.h2SizeXL || props.config.h2Size.xs};
+      font-size: ${(props) =>
+        props.h2SizeXS ||
+        props.h2SizeS ||
+        props.h2SizeM ||
+        props.h2SizeL ||
+        props.h2SizeXL ||
+        props.config.h2Size.xs};
     }
 
     h3 {
-      font-size: ${(props) => props.h3SizeXS || props.h3SizeS || props.h3SizeM || props.h3SizeL || props.h3SizeXL || props.config.h3Size.xs};
+      font-size: ${(props) =>
+        props.h3SizeXS ||
+        props.h3SizeS ||
+        props.h3SizeM ||
+        props.h3SizeL ||
+        props.h3SizeXL ||
+        props.config.h3Size.xs};
     }
 
     h4 {
-      font-size: ${(props) => props.h4SizeXS || props.h4SizeS || props.h4SizeM || props.h4SizeL || props.h4SizeXL || props.config.h4Size.xs};
+      font-size: ${(props) =>
+        props.h4SizeXS ||
+        props.h4SizeS ||
+        props.h4SizeM ||
+        props.h4SizeL ||
+        props.h4SizeXL ||
+        props.config.h4Size.xs};
     }
 
     h5 {
-      font-size: ${(props) => props.h5SizeXS || props.h5SizeS || props.h5SizeM || props.h5SizeL || props.h5SizeXL || props.config.h5Size.xs};
+      font-size: ${(props) =>
+        props.h5SizeXS ||
+        props.h5SizeS ||
+        props.h5SizeM ||
+        props.h5SizeL ||
+        props.h5SizeXL ||
+        props.config.h5Size.xs};
     }
   }
 `;

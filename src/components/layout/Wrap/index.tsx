@@ -27,11 +27,11 @@ const Wrap = ({ children }: Props) => {
   const context = React.useContext(Config);
 
   let config: ConfigProps = defaultConfig;
-  if(context.wrap) {
+  if (context.wrap) {
     config = {
       ...config,
-      ...context.wrap
-    }
+      ...context.wrap,
+    };
   }
 
   return <Component config={config}>{children}</Component>;
@@ -44,22 +44,22 @@ interface ComponentProps {
 const Component = styled.div<ComponentProps>`
   position: relative;
   margin: 0 auto;
-  width: ${props => props.config.widthXL};
+  width: ${(props) => props.config.widthXL};
 
   @media only screen and (max-width: ${screen.l}px) {
-    width: ${props => props.config.widthL};
+    width: ${(props) => props.config.widthL};
   }
 
   @media only screen and (max-width: ${screen.m}px) {
-    width: ${props => props.config.widthM};
+    width: ${(props) => props.config.widthM};
   }
 
   @media only screen and (max-width: ${screen.s}px) {
-    width: ${props => props.config.widthS};
+    width: ${(props) => props.config.widthS};
   }
 
   @media only screen and (max-width: ${screen.xs}px) {
-    width: ${props => props.config.widthXS};
+    width: ${(props) => props.config.widthXS};
   }
 `;
 

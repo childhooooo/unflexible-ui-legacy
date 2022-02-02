@@ -37,7 +37,7 @@ const Figure = ({
   heightM,
   heightS,
   heightXS,
-  lazy
+  lazy,
 }: Props) => {
   return (
     <Component

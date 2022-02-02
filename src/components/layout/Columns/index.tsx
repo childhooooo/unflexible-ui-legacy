@@ -6,14 +6,14 @@ import { Config } from 'components/UnflexibleProvider';
 interface ConfigProps {
   gap: {
     [key: string]: string;
-  },
+  };
   gapRate: {
     xl: number;
     l: number;
     m: number;
     s: number;
     xs: number;
-  }
+  };
 }
 
 const defaultConfig = {
@@ -29,8 +29,8 @@ const defaultConfig = {
     l: 1,
     m: 1,
     s: 1,
-    xs: 1
-  }
+    xs: 1,
+  },
 };
 
 export interface Props {
@@ -71,10 +71,10 @@ const Columns = ({
   const context = React.useContext(Config);
 
   let config: ConfigProps = defaultConfig;
-  if(context.columns) {
+  if (context.columns) {
     config = {
       ...config,
-      ...context.columns
+      ...context.columns,
     };
   }
 
@@ -121,16 +121,18 @@ interface ComponentProps {
 
 const Component = styled.div<ComponentProps>`
   display: flex;
-  flex-wrap: ${props => props.wrapXL};
+  flex-wrap: ${(props) => props.wrapXL};
   align-items: ${(props) => props.align};
   justify-content: ${(props) => props.justify};
-  gap: ${props => `calc(${props.config.gap[props.gap]} * ${props.config.gapRate.xl})`};
+  gap: ${(props) => `calc(${props.config.gap[props.gap]} * ${props.config.gapRate.xl})`};
 
   ${(props) =>
     props.repeat &&
     `
     > * {
-      width: calc((100% - ${props.repeat - 1} * ${props.config.gap[props.gap]} * ${props.config.gapRate.xl}) / ${props.repeat});
+      width: calc((100% - ${props.repeat - 1} * ${props.config.gap[props.gap]} * ${
+      props.config.gapRate.xl
+    }) / ${props.repeat});
     }
   `}
 
@@ -138,58 +140,68 @@ const Component = styled.div<ComponentProps>`
     props.repeatXL &&
     `
     > * {
-      width: calc((100% - ${props.repeatXL - 1} * ${props.config.gap[props.gap]} * ${props.config.gapRate.xl}) / ${props.repeatXL});
+      width: calc((100% - ${props.repeatXL - 1} * ${props.config.gap[props.gap]} * ${
+      props.config.gapRate.xl
+    }) / ${props.repeatXL});
     }
   `}
 
   @media only screen and (max-width: ${screen.l}px) {
-    flex-wrap: ${props => props.wrapL};
-    gap: ${props => `calc(${props.config.gap[props.gap]} * ${props.config.gapRate.l})`};
+    flex-wrap: ${(props) => props.wrapL};
+    gap: ${(props) => `calc(${props.config.gap[props.gap]} * ${props.config.gapRate.l})`};
 
     ${(props) =>
       props.repeatL &&
       `
       > * {
-        width: calc((100% - ${props.repeatL - 1} * ${props.config.gap[props.gap]} * ${props.config.gapRate.l}) / ${props.repeatL});
+        width: calc((100% - ${props.repeatL - 1} * ${props.config.gap[props.gap]} * ${
+        props.config.gapRate.l
+      }) / ${props.repeatL});
       }
     `}
   }
 
   @media only screen and (max-width: ${screen.m}px) {
-    flex-wrap: ${props => props.wrapM};
-    gap: ${props => `calc(${props.config.gap[props.gap]} * ${props.config.gapRate.m})`};
+    flex-wrap: ${(props) => props.wrapM};
+    gap: ${(props) => `calc(${props.config.gap[props.gap]} * ${props.config.gapRate.m})`};
 
     ${(props) =>
       props.repeatM &&
       `
       > * {
-        width: calc((100% - ${props.repeatM - 1} * ${props.config.gap[props.gap]} * ${props.config.gapRate.m}) / ${props.repeatM});
+        width: calc((100% - ${props.repeatM - 1} * ${props.config.gap[props.gap]} * ${
+        props.config.gapRate.m
+      }) / ${props.repeatM});
       }
     `}
   }
 
   @media only screen and (max-width: ${screen.s}px) {
-    flex-wrap: ${props => props.wrapS};
-    gap: ${props => `calc(${props.config.gap[props.gap]} * ${props.config.gapRate.s})`};
+    flex-wrap: ${(props) => props.wrapS};
+    gap: ${(props) => `calc(${props.config.gap[props.gap]} * ${props.config.gapRate.s})`};
 
     ${(props) =>
       props.repeatS &&
       `
       > * {
-        width: calc((100% - ${props.repeatS - 1} * ${props.config.gap[props.gap]} * ${props.config.gapRate.s}) / ${props.repeatS});
+        width: calc((100% - ${props.repeatS - 1} * ${props.config.gap[props.gap]} * ${
+        props.config.gapRate.s
+      }) / ${props.repeatS});
       }
     `}
   }
 
   @media only screen and (max-width: ${screen.xs}px) {
-    flex-wrap: ${props => props.wrapXS};
-    gap: ${props => `calc(${props.config.gap[props.gap]} * ${props.config.gapRate.xs})`};
+    flex-wrap: ${(props) => props.wrapXS};
+    gap: ${(props) => `calc(${props.config.gap[props.gap]} * ${props.config.gapRate.xs})`};
 
     ${(props) =>
       props.repeatXS &&
       `
       > * {
-        width: calc((100% - ${props.repeatXS - 1} * ${props.config.gap[props.gap]} * ${props.config.gapRate.xs}) / ${props.repeatXS});
+        width: calc((100% - ${props.repeatXS - 1} * ${props.config.gap[props.gap]} * ${
+        props.config.gapRate.xs
+      }) / ${props.repeatXS});
       }
     `}
   }

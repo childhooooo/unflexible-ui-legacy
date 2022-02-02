@@ -7,24 +7,24 @@ import { Config } from 'components/UnflexibleProvider';
 interface ConfigProps {
   padding: {
     [key: string]: string;
-  },
+  };
   paddingRate: {
-    xl: number,
-    l: number,
-    m: number,
-    s: number,
-    xs: number
-  },
+    xl: number;
+    l: number;
+    m: number;
+    s: number;
+    xs: number;
+  };
   gap: {
     [key: string]: string;
-  },
+  };
   gapRate: {
     xl: number;
     l: number;
     m: number;
     s: number;
     xs: number;
-  }
+  };
 }
 
 const defaultConfig: ConfigProps = {
@@ -32,28 +32,28 @@ const defaultConfig: ConfigProps = {
     wide: '180px',
     normal: '120px',
     narrow: '60px',
-    thin: '30px'
+    thin: '30px',
   },
   paddingRate: {
     xl: 1,
     l: 1,
     m: 0.5,
     s: 0.5,
-    xs: 0.5
+    xs: 0.5,
   },
   gap: {
     wide: '3rem',
     normal: '1.5rem',
     narrow: '1rem',
-    thin: '.5rem'
+    thin: '.5rem',
   },
   gapRate: {
     xl: 1,
     l: 1,
     m: 0.5,
     s: 0.5,
-    xs: 0.5
-  }
+    xs: 0.5,
+  },
 };
 
 export interface Props {
@@ -88,10 +88,10 @@ const Stacked = ({
   const context = React.useContext(Config);
 
   let config: ConfigProps = defaultConfig;
-  if(context.stacked) {
+  if (context.stacked) {
     config = {
       ...config,
-      ...context.stacked
+      ...context.stacked,
     };
   }
 
@@ -142,7 +142,9 @@ const Component = styled.div<ComponentProps>`
   width: 100%;
   height: ${(props) => props.height};
 
-  padding: ${(props) => `calc(${props.config.padding[props.paddingSize] || 0} * ${props.config.paddingRate.xl})`} 0;
+  padding: ${(props) =>
+      `calc(${props.config.padding[props.paddingSize] || 0} * ${props.config.paddingRate.xl})`}
+    0;
 
   ${(props) => {
     switch (props.paddingPos) {
@@ -178,19 +180,27 @@ const Component = styled.div<ComponentProps>`
   }
 
   @media only screen and (max-width: ${screen.l}px) {
-    padding: ${(props) => `calc(${props.config.padding[props.paddingSize] || 0} * ${props.config.paddingRate.l})`} 0;
+    padding: ${(props) =>
+        `calc(${props.config.padding[props.paddingSize] || 0} * ${props.config.paddingRate.l})`}
+      0;
   }
 
   @media only screen and (max-width: ${screen.m}px) {
-    padding: ${(props) => `calc(${props.config.padding[props.paddingSize] || 0} * ${props.config.paddingRate.m})`} 0;
+    padding: ${(props) =>
+        `calc(${props.config.padding[props.paddingSize] || 0} * ${props.config.paddingRate.m})`}
+      0;
   }
 
   @media only screen and (max-width: ${screen.s}px) {
-    padding: ${(props) => `calc(${props.config.padding[props.paddingSize] || 0} * ${props.config.paddingRate.s})`} 0;
+    padding: ${(props) =>
+        `calc(${props.config.padding[props.paddingSize] || 0} * ${props.config.paddingRate.s})`}
+      0;
   }
 
   @media only screen and (max-width: ${screen.xs}px) {
-    padding: ${(props) => `calc(${props.config.padding[props.paddingSize] || 0} * ${props.config.paddingRate.xs})`} 0;
+    padding: ${(props) =>
+        `calc(${props.config.padding[props.paddingSize] || 0} * ${props.config.paddingRate.xs})`}
+      0;
   }
 `;
 

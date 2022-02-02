@@ -69,8 +69,8 @@ const Component = styled.div<ComponentProps>`
   ${(props) => props.width && `width: ${props.width};`};
   ${(props) => props.widthXL && `width: ${props.widthXL};`};
   ${(props) => props.maxWidth && `max-width: ${props.maxWidth};`};
-  flex-shrink: ${props => props.shrink};
-  flex-grow: ${props => props.grow};
+  flex-shrink: ${(props) => props.shrink};
+  flex-grow: ${(props) => props.grow};
 
   > div {
     position: relative;

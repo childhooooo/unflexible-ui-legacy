@@ -69,7 +69,12 @@ Primary.args = {
       </Stacked>
 
       <Stacked wrap>
-        <GridRow grid="repeat(auto-fit, 25%)" gridM="repeat(auto-fit, 50%)" gap="normal" justify="center">
+        <GridRow
+          grid="repeat(auto-fit, 25%)"
+          gridM="repeat(auto-fit, 50%)"
+          gap="normal"
+          justify="center"
+        >
           <Block width="100%" height="100%">
             <PlainText>
               <h3>タイトル</h3>
