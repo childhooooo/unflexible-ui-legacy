@@ -70,28 +70,25 @@ Primary.args = {
 
       <Stacked wrap>
         <GridRow
-          grid="repeat(auto-fit, 25%)"
-          gridM="repeat(auto-fit, 50%)"
+          repeat={4}
+          repeatM={2}
           gap="normal"
           justify="center"
         >
           <Block width="100%" height="100%">
-            <PlainText>
-              <h3>タイトル</h3>
-              <p>文章</p>
-            </PlainText>
+            <Figure src={imageM} name="宇宙飛行士" width="100%" height="100%" />
           </Block>
 
           <Block width="100%" height="100%">
-            <PlainText>
-              <h3>タイトル</h3>
-              <p>文章</p>
-              <ul>
-                <li>リスト</li>
-                <li>リスト</li>
-                <li>リスト</li>
-              </ul>
-            </PlainText>
+            <Figure src={imageM} name="宇宙飛行士" width="100%" height="100%" />
+          </Block>
+
+          <Block width="100%" height="100%">
+            <Figure src={imageM} name="宇宙飛行士" width="100%" height="100%" />
+          </Block>
+
+          <Block width="100%" height="100%">
+            <Figure src={imageM} name="宇宙飛行士" width="100%" height="100%" />
           </Block>
 
           <Block width="100%" height="100%">
