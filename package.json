@@ -1,6 +1,6 @@
 {
   "name": "unflexible-ui-legacy",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Don't be flexible.",
   "main": "build/index.js",
   "module": "build/index.es.js",
