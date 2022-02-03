@@ -31,10 +31,12 @@ const config = {
     typescript(),
     postcss({
       plugins: [
+        require('postcss-object-fit-images'),
         require('postcss-flexbugs-fixes'),
         require('postcss-preset-env')({
           autoprefixer: {
             flexbox: 'no-2009',
+            gap: true
           },
           stage: 3,
           features: {
