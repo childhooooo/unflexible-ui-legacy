@@ -623,7 +623,7 @@ const Component = styled.div<ComponentProps>`
 
   @media only screen and (max-width: ${screen.l}px) {
     * {
-      font-size: ${(props) => props.h1SizeL || props.h1SizeXL || props.config.baseSize.l};
+      font-size: ${(props) => props.baseSizeL || props.baseSizeXL || props.config.baseSize.l};
     }
 
     h1 {
@@ -631,31 +631,31 @@ const Component = styled.div<ComponentProps>`
     }
 
     h2 {
-      font-size: ${(props) => props.h1SizeL || props.h1SizeXL || props.config.h2Size.l};
+      font-size: ${(props) => props.h2SizeL || props.h2SizeXL || props.config.h2Size.l};
     }
 
     h3 {
-      font-size: ${(props) => props.h1SizeL || props.h1SizeXL || props.config.h3Size.l};
+      font-size: ${(props) => props.h3SizeL || props.h3SizeXL || props.config.h3Size.l};
     }
 
     h4 {
-      font-size: ${(props) => props.h1SizeL || props.h1SizeXL || props.config.h4Size.l};
+      font-size: ${(props) => props.h4SizeL || props.h4SizeXL || props.config.h4Size.l};
     }
 
     h5 {
-      font-size: ${(props) => props.h1SizeL || props.h1SizeXL || props.config.h5Size.l};
+      font-size: ${(props) => props.h5SizeL || props.h5SizeXL || props.config.h5Size.l};
     }
   }
 
   @media only screen and (max-width: ${screen.m}px) {
     * {
       font-size: ${(props) =>
-        props.h1SizeM || props.h1SizeL || props.h1SizeXL || props.config.baseSize.m};
+        props.baseSizeM || props.baseSizeL || props.baseSizeXL || props.config.baseSize.m};
     }
 
     h1 {
       font-size: ${(props) =>
-        props.h2SizeM || props.h2SizeL || props.h2SizeXL || props.config.h1Size.m};
+        props.h1SizeM || props.h1SizeL || props.h1SizeXL || props.config.h1Size.m};
     }
 
     h2 {
@@ -682,16 +682,16 @@ const Component = styled.div<ComponentProps>`
   @media only screen and (max-width: ${screen.s}px) {
     * {
       font-size: ${(props) =>
-        props.h1SizeS ||
-        props.h1SizeM ||
-        props.h1SizeL ||
-        props.h1SizeXL ||
+        props.baseSizeS ||
+        props.baseSizeM ||
+        props.baseSizeL ||
+        props.baseSizeXL ||
         props.config.baseSize.s};
     }
 
     h1 {
       font-size: ${(props) =>
-        props.h2SizeS || props.h2SizeM || props.h2SizeL || props.h2SizeXL || props.config.h1Size.s};
+        props.h1SizeS || props.h1SizeM || props.h1SizeL || props.h1SizeXL || props.config.h1Size.s};
     }
 
     h2 {
@@ -718,11 +718,11 @@ const Component = styled.div<ComponentProps>`
   @media only screen and (max-width: ${screen.xs}px) {
     * {
       font-size: ${(props) =>
-        props.h1SizeXS ||
-        props.h1SizeS ||
-        props.h1SizeM ||
-        props.h1SizeL ||
-        props.h1SizeXL ||
+        props.baseSizeXS ||
+        props.baseSizeS ||
+        props.baseSizeM ||
+        props.baseSizeL ||
+        props.baseSizeXL ||
         props.config.baseSize.xs};
     }
 
