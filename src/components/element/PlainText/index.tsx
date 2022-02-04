@@ -627,7 +627,7 @@ const Component = styled.div<ComponentProps>`
     }
 
     h1 {
-      font-size: ${(props) => props.h2SizeL || props.h1SizeXL || props.config.h1Size.l};
+      font-size: ${(props) => props.h1SizeL || props.h1SizeXL || props.config.h1Size.l};
     }
 
     h2 {
