@@ -45,27 +45,21 @@ export interface Props {
   repeatM?: number;
   repeatS?: number;
   repeatXS?: number;
-  grid?: string;
-  gridXL?: string;
-  gridL?: string;
-  gridM?: string;
-  gridS?: string;
-  gridXS?: string;
+  grid?: string[];
+  gridXL?: string[];
+  gridL?: string[];
+  gridM?: string[];
+  gridS?: string[];
+  gridXS?: string[];
   children?: React.ReactNode;
 }
 
-const Columns = ({
+const GridRow = ({
   align,
   justify,
   gap,
   rowGap,
   columnGap,
-  repeat,
-  repeatXL,
-  repeatL,
-  repeatM,
-  repeatS,
-  repeatXS,
   grid,
   gridXL,
   gridL,
@@ -90,11 +84,6 @@ const Columns = ({
       justify={justify || 'normal'}
       rowGap={rowGap || gap || 'gapless'}
       columnGap={columnGap || gap || 'gapless'}
-      repeatXL={repeatXL || repeat || null}
-      repeatL={repeatL || repeatXL || repeat || null}
-      repeatM={repeatM || repeatL || repeatXL || repeat || null}
-      repeatS={repeatS || repeatM || repeatL || repeatXL || repeat || null}
-      repeatXS={repeatXS || repeatS || repeatM || repeatL || repeatXL || repeat || null}
       gridXL={gridXL || grid || null}
       gridL={gridL || gridXL || grid || null}
       gridM={gridM || gridL || gridXL || grid || null}
@@ -112,90 +101,100 @@ interface ComponentProps {
   justify: string;
   rowGap: string;
   columnGap: string;
-  repeatXL: number | null;
-  repeatL: number | null;
-  repeatM: number | null;
-  repeatS: number | null;
-  repeatXS: number | null;
-  gridXL: string | null;
-  gridL: string | null;
-  gridM: string | null;
-  gridS: string | null;
-  gridXS: string | null;
+  gridXL: string[] | null;
+  gridL: string[] | null;
+  gridM: string[] | null;
+  gridS: string[] | null;
+  gridXS: string[] | null;
   config: ConfigProps;
 }
 
 const Component = styled.div<ComponentProps>`
+  display: -ms-grid;
   display: grid;
+  -webkit-box-align: ${(props) => props.align};
+  -ms-flex-align: ${(props) => props.align};
   align-items: ${(props) => props.align};
+  -webkit-box-pack: ${(props) => props.justify};
+  -ms-flex-pack: ${(props) => props.justify};
   justify-content: ${(props) => props.justify};
   row-gap: ${(props) => `calc(${props.config.gap[props.rowGap]} * ${props.config.gapRate.xl})`};
+  -webkit-column-gap: ${(props) =>
+    `calc(${props.config.gap[props.columnGap]} * ${props.config.gapRate.xl})`};
+  -moz-column-gap: ${(props) =>
+    `calc(${props.config.gap[props.columnGap]} * ${props.config.gapRate.xl})`};
   column-gap: ${(props) =>
     `calc(${props.config.gap[props.columnGap]} * ${props.config.gapRate.xl})`};
 
-  ${props => props.repeatXL && `
-    grid-template: auto / repeat(auto-fit, calc((100% - ${props.config.gap[props.columnGap]} * ${props.config.gapRate.xl} * ${props.repeatXL - 1}) / ${props.repeatXL}));
-  `}
-
   ${props => props.gridXL && `
-    grid-template: auto / ${props.gridXL};
+    -ms-grid-rows: auto;
+    -ms-grid-columns: auto / ${props.gridXL.join(` calc(${props.config.gap[props.columnGap]} * ${props.config.gapRate.xl}) `)};
+    grid-template: auto / ${props.gridXL.join(' ')};
   `}
 
   @media only screen and (max-width: ${screen.l}px) {
     row-gap: ${(props) => `calc(${props.config.gap[props.rowGap]} * ${props.config.gapRate.l})`};
+    -webkit-column-gap: ${(props) =>
+      `calc(${props.config.gap[props.columnGap]} * ${props.config.gapRate.l})`};
+    -moz-column-gap: ${(props) =>
+      `calc(${props.config.gap[props.columnGap]} * ${props.config.gapRate.l})`};
     column-gap: ${(props) =>
       `calc(${props.config.gap[props.columnGap]} * ${props.config.gapRate.l})`};
 
-    ${props => props.repeatL && `
-      grid-template: auto / repeat(auto-fit, calc((100% - ${props.config.gap[props.columnGap]} * ${props.config.gapRate.l} * ${props.repeatL - 1}) / ${props.repeatL}));
-    `}
-
     ${props => props.gridL && `
-      grid-template: auto / ${props.gridL};
+      -ms-grid-rows: auto;
+      -ms-grid-columns: auto / ${props.gridL.join(` calc(${props.config.gap[props.columnGap]} * ${props.config.gapRate.l}) `)};
+      grid-template: auto / ${props.gridL.join(' ')};
     `}
   }
 
   @media only screen and (max-width: ${screen.m}px) {
     row-gap: ${(props) => `calc(${props.config.gap[props.rowGap]} * ${props.config.gapRate.m})`};
+    -webkit-column-gap: ${(props) =>
+      `calc(${props.config.gap[props.columnGap]} * ${props.config.gapRate.m})`};
+    -moz-column-gap: ${(props) =>
+      `calc(${props.config.gap[props.columnGap]} * ${props.config.gapRate.m})`};
     column-gap: ${(props) =>
       `calc(${props.config.gap[props.columnGap]} * ${props.config.gapRate.m})`};
 
-    ${props => props.repeatM && `
-      grid-template: auto / repeat(auto-fit, calc((100% - ${props.config.gap[props.columnGap]} * ${props.config.gapRate.m} * ${props.repeatM - 1}) / ${props.repeatM}));
-    `}
-
     ${props => props.gridM && `
-      grid-template: auto / ${props.gridM};
+      -ms-grid-rows: auto;
+      -ms-grid-columns: auto / ${props.gridM.join(` calc(${props.config.gap[props.columnGap]} * ${props.config.gapRate.m}) `)};
+      grid-template: auto / ${props.gridM.join(' ')};
     `}
   }
 
   @media only screen and (max-width: ${screen.s}px) {
     row-gap: ${(props) => `calc(${props.config.gap[props.rowGap]} * ${props.config.gapRate.s})`};
+    -webkit-column-gap: ${(props) =>
+      `calc(${props.config.gap[props.columnGap]} * ${props.config.gapRate.s})`};
+    -moz-column-gap: ${(props) =>
+      `calc(${props.config.gap[props.columnGap]} * ${props.config.gapRate.s})`};
     column-gap: ${(props) =>
       `calc(${props.config.gap[props.columnGap]} * ${props.config.gapRate.s})`};
 
-    ${props => props.repeatS && `
-      grid-template: auto / repeat(auto-fit, calc((100% - ${props.config.gap[props.columnGap]} * ${props.config.gapRate.s} * ${props.repeatS - 1}) / ${props.repeatS}));
-    `}
-
     ${props => props.gridS && `
-      grid-template: auto / ${props.gridS};
+      -ms-grid-rows: auto;
+      -ms-grid-columns: auto / ${props.gridS.join(` calc(${props.config.gap[props.columnGap]} * ${props.config.gapRate.s}) `)};
+      grid-template: auto / ${props.gridS.join(' ')};
     `}
   }
 
   @media only screen and (max-width: ${screen.xs}px) {
     row-gap: ${(props) => `calc(${props.config.gap[props.rowGap]} * ${props.config.gapRate.xs})`};
+    -webkit-column-gap: ${(props) =>
+      `calc(${props.config.gap[props.columnGap]} * ${props.config.gapRate.xs})`};
+    -moz-column-gap: ${(props) =>
+      `calc(${props.config.gap[props.columnGap]} * ${props.config.gapRate.xs})`};
     column-gap: ${(props) =>
       `calc(${props.config.gap[props.columnGap]} * ${props.config.gapRate.xs})`};
 
-    ${props => props.repeatXS && `
-      grid-template: auto / repeat(auto-fit, calc((100% - ${props.config.gap[props.columnGap]} * ${props.config.gapRate.xs} * ${props.repeatXS - 1}) / ${props.repeatXS}));
-    `}
-
     ${props => props.gridXS && `
-      grid-template: auto / ${props.gridXS};
+      -ms-grid-rows: auto;
+      -ms-grid-columns: auto / ${props.gridXS.join(` calc(${props.config.gap[props.columnGap]} * ${props.config.gapRate.xs}) `)};
+      grid-template: auto / ${props.gridXS.join(' ')};
     `}
   }
 `;
 
-export default Columns;
+export default GridRow;

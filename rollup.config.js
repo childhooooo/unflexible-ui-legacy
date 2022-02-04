@@ -31,7 +31,6 @@ const config = {
     typescript(),
     postcss({
       plugins: [
-        require('postcss-object-fit-images'),
         require('postcss-flexbugs-fixes'),
         require('postcss-preset-env')({
           autoprefixer: {
@@ -40,7 +39,7 @@ const config = {
           },
           stage: 3,
           features: {
-            'custom-properties': true,
+            'custom-properties': false
           },
         }),
       ],

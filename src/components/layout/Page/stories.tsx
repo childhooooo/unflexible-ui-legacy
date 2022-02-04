@@ -70,8 +70,8 @@ Primary.args = {
 
       <Stacked wrap>
         <GridRow
-          repeat={4}
-          repeatM={2}
+          grid={['1fr', '1fr', '1fr', '1fr']}
+          gridM={['1fr', '1fr']}
           gap="normal"
           justify="center"
         >
