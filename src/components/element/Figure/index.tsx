@@ -18,6 +18,7 @@ export interface Props {
   heightM?: string;
   heightS?: string;
   heightXS?: string;
+  position?: string;
   lazy?: boolean;
 }
 
@@ -37,6 +38,7 @@ const Figure = ({
   heightM,
   heightS,
   heightXS,
+  position,
   lazy,
 }: Props) => {
   return (
@@ -53,6 +55,7 @@ const Figure = ({
       heightM={heightM}
       heightS={heightS}
       heightXS={heightXS}
+      position={position || '50% 50%'}
     >
       <img src={src} srcSet={srcSet || src} alt={name} loading={lazy ? 'lazy' : 'eager'} />
     </Component>
@@ -72,6 +75,7 @@ interface ComponentProps {
   heightM?: string;
   heightS?: string;
   heightXS?: string;
+  position: string;
 }
 
 const Component = styled.figure<ComponentProps>`
@@ -87,6 +91,8 @@ const Component = styled.figure<ComponentProps>`
     width: 100%;
     height: 100%;
     object-fit: cover;
+    object-position: ${props => props.position};
+    font-family: ${props => `object-fit: cover; object-position: ${props.position};`};
     vertical-align: middle;
   }
 
