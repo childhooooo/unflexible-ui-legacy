@@ -1,6 +1,6 @@
 {
   "name": "unflexible-ui-core",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Don't be flexible.",
   "main": "build/index.js",
   "module": "build/index.es.js",
@@ -39,7 +39,6 @@
     "babel-plugin-styled-components": "^2.0.7",
     "core-js": "^3.22.7",
     "eslint": "^8.16.0",
-    "eslint-config-next": "^12.1.6",
     "eslint-config-prettier": "^8.5.0",
     "eslint-config-react-app": "^7.0.1",
     "eslint-plugin-flowtype": "^8.0.3",
@@ -88,7 +87,6 @@
     "stylelint": "stylelint"
   },
   "peerDependencies": {
-    "next": "^12.0.5",
     "react": "^18.1.0",
     "react-dom": "^18.1.0",
     "styled-components": "^5.3.5"
