@@ -2,7 +2,6 @@ export { default as UnflexibleProvider } from 'components/UnflexibleProvider';
 
 export { default as Wrap } from 'components/layout/Wrap';
 export { default as Stacked } from 'components/layout/Stacked';
-export { default as Page } from 'components/layout/Page';
 export { default as Block } from 'components/layout/Block';
 export { default as Columns } from 'components/layout/Columns';
 export { default as GridRow } from 'components/layout/GridRow';
