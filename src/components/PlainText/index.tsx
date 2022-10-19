@@ -11,7 +11,7 @@ interface EachSizes {
   xs: string;
 }
 
-interface ConfigProps {
+export interface PlainTextConfigProps {
   baseSize: EachSizes;
   h1Size: EachSizes;
   h2Size: EachSizes;
@@ -68,7 +68,7 @@ interface ConfigProps {
   h5LetterSpacing: string;
 }
 
-const defaultConfig: ConfigProps = {
+const defaultConfig: PlainTextConfigProps = {
   baseSize: {
     xl: '1rem',
     l: '1rem',
@@ -161,7 +161,7 @@ const defaultConfig: ConfigProps = {
   h5LetterSpacing: '0',
 };
 
-export interface Props {
+export interface PlainTextProps {
   text?: string;
   baseSizeXL?: string;
   h1SizeXL?: string;
@@ -244,7 +244,7 @@ export interface Props {
   children?: React.ReactNode;
 }
 
-const PlainText = ({
+export const PlainText = ({
   text,
   baseSizeXL,
   h1SizeXL,
@@ -325,10 +325,10 @@ const PlainText = ({
   h4LetterSpacing,
   h5LetterSpacing,
   children,
-}: Props) => {
+}: PlainTextProps) => {
   const context = React.useContext(Config);
 
-  let config: ConfigProps = defaultConfig;
+  let config: PlainTextConfigProps = defaultConfig;
   if (context.plainText) {
     config = {
       ...config,
@@ -503,7 +503,7 @@ interface ComponentProps {
   h3LetterSpacing?: string;
   h4LetterSpacing?: string;
   h5LetterSpacing?: string;
-  config: ConfigProps;
+  config: PlainTextConfigProps;
 }
 
 const Component = styled.div<ComponentProps>`
@@ -611,6 +611,7 @@ const Component = styled.div<ComponentProps>`
   figure,
   img {
     max-width: 100%;
+    vertical-align: middle;
   }
 
   > *:first-child {
@@ -777,5 +778,3 @@ const Component = styled.div<ComponentProps>`
     }
   }
 `;
-
-export default PlainText;

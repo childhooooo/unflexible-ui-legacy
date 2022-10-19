@@ -1,14 +1,14 @@
 import React from 'react';
 import { Story, Meta } from '@storybook/react';
-import PlainText, { Props } from './index';
-import UnflexibleProvider from '../../UnflexibleProvider';
+import { PlainText, PlainTextProps } from './index';
+import { UnflexibleProvider } from '../UnflexibleProvider';
 
 export default {
   title: 'PlainText',
   component: PlainText,
 } as Meta;
 
-const Template: Story<Props> = (args) => (
+const Template: Story<PlainTextProps> = (args) => (
   <UnflexibleProvider config={{}}>
     <PlainText {...args} />
   </UnflexibleProvider>

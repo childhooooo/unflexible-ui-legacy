@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { screen } from 'lib/config';
 
-export interface Props {
+export interface BlockProps {
   width?: string;
   widthXL?: string;
   widthL?: string;
@@ -17,7 +17,7 @@ export interface Props {
   children?: React.ReactNode;
 }
 
-const Block = ({
+export const Block = ({
   width,
   widthXL,
   widthL,
@@ -30,7 +30,7 @@ const Block = ({
   shrink,
   grow,
   children,
-}: Props) => {
+}: BlockProps) => {
   return (
     <Component
       width={width}
@@ -128,5 +128,3 @@ ${(props) =>
   }
 `}
 `;
-
-export default Block;

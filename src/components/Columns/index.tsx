@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { screen } from 'lib/config';
 import { Config } from 'components/UnflexibleProvider';
 
-interface ConfigProps {
+export interface ColumnsConfigProps {
   gap: {
     [key: string]: string;
   };
@@ -33,7 +33,7 @@ const defaultConfig = {
   },
 };
 
-export interface Props {
+export interface ColumnsProps {
   align?: string;
   justify?: string;
   gap?: string;
@@ -51,7 +51,7 @@ export interface Props {
   children?: React.ReactNode;
 }
 
-const Columns = ({
+export const Columns = ({
   align,
   justify,
   gap,
@@ -67,10 +67,10 @@ const Columns = ({
   wrapS,
   wrapXS,
   children,
-}: Props) => {
+}: ColumnsProps) => {
   const context = React.useContext(Config);
 
-  let config: ConfigProps = defaultConfig;
+  let config: ColumnsConfigProps = defaultConfig;
   if (context.columns) {
     config = {
       ...config,
@@ -116,7 +116,7 @@ interface ComponentProps {
   wrapM: string;
   wrapS: string;
   wrapXS: string;
-  config: ConfigProps;
+  config: ColumnsConfigProps;
 }
 
 const Component = styled.div<ComponentProps>`
@@ -206,5 +206,3 @@ const Component = styled.div<ComponentProps>`
     `}
   }
 `;
-
-export default Columns;

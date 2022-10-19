@@ -6,10 +6,8 @@ export const screen = {
 };
 
 export const color = {
-  black: '#222222',
-  white: '#ffffff',
-  gray: '#f2f2f2',
-  darkGray: '#9FA0A0',
+  black: '#333333',
+  white: '#ffffff'
 };
 
 export const font = {

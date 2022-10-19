@@ -4,14 +4,14 @@ import React from 'react';
 import { createGlobalStyle } from 'styled-components';
 import { font, color, screen } from 'lib/config';
 
-interface Props {
+export interface UnflexibleProviderProps {
   config: any;
   children?: React.ReactNode;
 }
 
 export const Config = React.createContext<any>({});
 
-const UnflexibleProvider = ({ config, children }: Props) => {
+export const UnflexibleProvider = ({ config, children }: UnflexibleProviderProps) => {
   return (
     <Config.Provider value={config}>
       <GlobalStyle />
@@ -39,5 +39,3 @@ body {
   }
 }
 `;
-
-export default UnflexibleProvider;

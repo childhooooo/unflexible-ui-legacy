@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { screen } from 'lib/config';
 import { Config } from 'components/UnflexibleProvider';
 
-interface ConfigProps {
+export interface GridRowConfigProps {
   gap: {
     [key: string]: string;
   };
@@ -33,7 +33,7 @@ const defaultConfig = {
   },
 };
 
-export interface Props {
+export interface GridRowProps {
   align?: string;
   justify?: string;
   gap?: string;
@@ -54,7 +54,7 @@ export interface Props {
   children?: React.ReactNode;
 }
 
-const GridRow = ({
+export const GridRow = ({
   align,
   justify,
   gap,
@@ -67,10 +67,10 @@ const GridRow = ({
   gridS,
   gridXS,
   children,
-}: Props) => {
+}: GridRowProps) => {
   const context = React.useContext(Config);
 
-  let config: ConfigProps = defaultConfig;
+  let config: GridRowConfigProps = defaultConfig;
   if (context.gridRow) {
     config = {
       ...config,
@@ -106,7 +106,7 @@ interface ComponentProps {
   gridM: string[] | null;
   gridS: string[] | null;
   gridXS: string[] | null;
-  config: ConfigProps;
+  config: GridRowConfigProps;
 }
 
 const Component = styled.div<ComponentProps>`
@@ -196,5 +196,3 @@ const Component = styled.div<ComponentProps>`
     `}
   }
 `;
-
-export default GridRow;

@@ -1,14 +1,14 @@
 import React from 'react';
 import { Story, Meta } from '@storybook/react';
-import Columns, { Props } from './index';
-import UnflexibleProvider from '../../UnflexibleProvider';
+import { Columns, ColumnsProps } from './index';
+import { UnflexibleProvider } from '../UnflexibleProvider';
 
 export default {
   title: 'Columns',
   component: Columns,
 } as Meta;
 
-const Template: Story<Props> = (args) => {
+const Template: Story<ColumnsProps> = (args) => {
   return (
     <UnflexibleProvider config={{}}>
       <Columns {...args} />
