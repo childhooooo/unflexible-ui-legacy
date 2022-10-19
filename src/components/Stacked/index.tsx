@@ -1,10 +1,10 @@
 import React from 'react';
 import styled from 'styled-components';
-import Wrap from '../Wrap';
+import { Wrap } from '../Wrap';
 import { screen } from 'lib/config';
 import { Config } from 'components/UnflexibleProvider';
 
-interface ConfigProps {
+export interface StackedConfigProps {
   padding: {
     [key: string]: string;
   };
@@ -27,7 +27,7 @@ interface ConfigProps {
   };
 }
 
-const defaultConfig: ConfigProps = {
+const defaultConfig: StackedConfigProps = {
   padding: {
     wide: '180px',
     normal: '120px',
@@ -56,7 +56,7 @@ const defaultConfig: ConfigProps = {
   },
 };
 
-export interface Props {
+export interface StackedProps {
   paddingSize?: string;
   paddingPos?: string;
   color?: string;
@@ -71,7 +71,7 @@ export interface Props {
   children?: React.ReactNode;
 }
 
-const Stacked = ({
+export const Stacked = ({
   paddingSize,
   paddingPos,
   color,
@@ -84,10 +84,10 @@ const Stacked = ({
   imagePos,
   wrap,
   children,
-}: Props) => {
+}: StackedProps) => {
   const context = React.useContext(Config);
 
-  let config: ConfigProps = defaultConfig;
+  let config: StackedConfigProps = defaultConfig;
   if (context.stacked) {
     config = {
       ...config,
@@ -129,7 +129,7 @@ interface ComponentProps {
   zIndex: number;
   imageSize: string;
   imagePos: string;
-  config: ConfigProps;
+  config: StackedConfigProps;
 }
 
 const Component = styled.div<ComponentProps>`
@@ -207,5 +207,3 @@ const Component = styled.div<ComponentProps>`
 const NoWrap = styled.div`
   width: 100%;
 `;
-
-export default Stacked;

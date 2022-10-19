@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { screen } from 'lib/config';
 
-export interface Props {
+export interface FigureProps {
   name: string;
   src: any;
   srcSet?: string;
@@ -22,7 +22,7 @@ export interface Props {
   lazy?: boolean;
 }
 
-const Figure = ({
+export const Figure = ({
   name,
   src,
   srcSet,
@@ -40,7 +40,7 @@ const Figure = ({
   heightXS,
   position,
   lazy,
-}: Props) => {
+}: FigureProps) => {
   return (
     <Component
       width={width || 'auto'}
@@ -116,5 +116,3 @@ const Component = styled.figure<ComponentProps>`
     ${(props) => props.heightXS && `height: ${props.heightXS};`};
   }
 `;
-
-export default Figure;

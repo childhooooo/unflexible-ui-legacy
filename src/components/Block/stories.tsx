@@ -1,17 +1,17 @@
 import React from 'react';
 import { Story, Meta } from '@storybook/react';
-import Stacked, { Props } from './index';
-import UnflexibleProvider from '../../UnflexibleProvider';
+import { Block, BlockProps } from './index';
+import { UnflexibleProvider } from '../UnflexibleProvider';
 
 export default {
-  title: 'Stacked',
-  component: Stacked,
+  title: 'Block',
+  component: Block,
 } as Meta;
 
-const Template: Story<Props> = (args) => {
+const Template: Story<BlockProps> = (args) => {
   return (
     <UnflexibleProvider config={{}}>
-      <Stacked {...args} />
+      <Block {...args} />
     </UnflexibleProvider>
   );
 };

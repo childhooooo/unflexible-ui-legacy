@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { screen } from 'lib/config';
 import { Config } from 'components/UnflexibleProvider';
 
-interface ConfigProps {
+export interface WrapConfigProps {
   widthXL: string;
   widthL: string;
   widthM: string;
@@ -11,7 +11,7 @@ interface ConfigProps {
   widthXS: string;
 }
 
-const defaultConfig: ConfigProps = {
+const defaultConfig: WrapConfigProps = {
   widthXL: '1240px',
   widthL: '1030px',
   widthM: '760px',
@@ -19,14 +19,14 @@ const defaultConfig: ConfigProps = {
   widthXS: '94%',
 };
 
-export interface Props {
+export interface WrapProps {
   children?: React.ReactNode;
 }
 
-const Wrap = ({ children }: Props) => {
+export const Wrap = ({ children }: WrapProps) => {
   const context = React.useContext(Config);
 
-  let config: ConfigProps = defaultConfig;
+  let config: WrapConfigProps = defaultConfig;
   if (context.wrap) {
     config = {
       ...config,
@@ -38,7 +38,7 @@ const Wrap = ({ children }: Props) => {
 };
 
 interface ComponentProps {
-  config: ConfigProps;
+  config: WrapConfigProps;
 }
 
 const Component = styled.div<ComponentProps>`
@@ -62,5 +62,3 @@ const Component = styled.div<ComponentProps>`
     width: ${(props) => props.config.widthXS};
   }
 `;
-
-export default Wrap;
