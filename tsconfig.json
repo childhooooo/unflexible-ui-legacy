@@ -1,18 +1,17 @@
 {
   "compilerOptions": {
     "outDir": "./build/",
-    "target": "es5",
+    "target": "es6",
     "declaration": true,
-    "lib": ["dom", "dom.iterable", "esnext"],
+    "lib": ["dom", "ES2020"],
     "allowJs": true,
     "skipLibCheck": true,
     "strict": true,
     "sourceMap": true,
     "forceConsistentCasingInFileNames": true,
-    "noEmit": true,
     "noImplicitAny": true,
     "esModuleInterop": true,
-    "module": "esnext",
+    "module": "CommonJS",
     "moduleResolution": "node",
     "resolveJsonModule": true,
     "isolatedModules": true,
@@ -20,6 +19,6 @@
     "baseUrl": "./src",
     "typeRoots": ["types"]
   },
-  "include": ["**/*.d.ts", "**/*.ts", "**/*.tsx"],
+  "include": ["./src/**/*.d.ts", "./src/**/*.ts", "./src/**/*.tsx"],
   "exclude": ["node_modules"]
 }

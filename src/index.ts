@@ -8,4 +8,4 @@ export * from 'components/GridRow';
 export * from 'components/Figure';
 export * from 'components/PlainText';
 
-export * as config from 'lib/config';
+export * from 'config';

@@ -1,39 +1,9 @@
 import React from 'react';
-import styled from 'styled-components';
-import { screen } from 'lib/config';
+import { styled } from '@linaria/react';
 import { Config } from 'components/UnflexibleProvider';
+import { UnflexibleProviderConfig } from 'config';
 
-export interface ColumnsConfigProps {
-  gap: {
-    [key: string]: string;
-  };
-  gapRate: {
-    xl: number;
-    l: number;
-    m: number;
-    s: number;
-    xs: number;
-  };
-}
-
-const defaultConfig = {
-  gap: {
-    wide: '3rem',
-    normal: '1.5rem',
-    narrow: '1rem',
-    thin: '.5rem',
-    gapless: '0rem',
-  },
-  gapRate: {
-    xl: 1,
-    l: 1,
-    m: 1,
-    s: 1,
-    xs: 1,
-  },
-};
-
-export interface ColumnsProps {
+export type ColumnsProps = {
   align?: string;
   justify?: string;
   gap?: string;
@@ -43,13 +13,9 @@ export interface ColumnsProps {
   repeatM?: number;
   repeatS?: number;
   repeatXS?: number;
-  wrapXL?: string;
-  wrapL?: string;
-  wrapM?: string;
-  wrapS?: string;
-  wrapXS?: string;
+  wrap?: string;
   children?: React.ReactNode;
-}
+};
 
 export const Columns = ({
   align,
@@ -61,39 +27,22 @@ export const Columns = ({
   repeatM,
   repeatS,
   repeatXS,
-  wrapXL,
-  wrapL,
-  wrapM,
-  wrapS,
-  wrapXS,
+  wrap,
   children,
 }: ColumnsProps) => {
-  const context = React.useContext(Config);
-
-  let config: ColumnsConfigProps = defaultConfig;
-  if (context.columns) {
-    config = {
-      ...config,
-      ...context.columns,
-    };
-  }
+  const config = React.useContext(Config);
 
   return (
     <Component
       align={align || 'stretch'}
       justify={justify || 'normal'}
       gap={gap || 'gapless'}
-      repeat={repeat}
-      repeatXL={repeatXL}
-      repeatL={repeatL}
-      repeatM={repeatM}
-      repeatS={repeatS}
-      repeatXS={repeatXS}
-      wrapXL={wrapXL || 'wrap'}
-      wrapL={wrapL || wrapXL || 'wrap'}
-      wrapM={wrapM || wrapL || wrapXL || 'wrap'}
-      wrapS={wrapS || wrapM || wrapL || wrapXL || 'wrap'}
-      wrapXS={wrapXS || wrapS || wrapM || wrapL || wrapXL || 'wrap'}
+      repeatXL={repeatXL || repeat}
+      repeatL={repeatL || repeatXL || repeat}
+      repeatM={repeatM || repeatL || repeatXL || repeat}
+      repeatS={repeatS || repeatM || repeatL || repeatXL || repeat}
+      repeatXS={repeatXS || repeatS || repeatM || repeatL || repeatXS}
+      wrap={wrap || 'wrap'}
       config={config}
     >
       {children}
@@ -101,108 +50,87 @@ export const Columns = ({
   );
 };
 
-interface ComponentProps {
+export type ComponentProps = {
   align: string;
   justify: string;
   gap: string;
-  repeat?: number;
   repeatXL?: number;
   repeatL?: number;
   repeatM?: number;
   repeatS?: number;
   repeatXS?: number;
-  wrapXL: string;
-  wrapL: string;
-  wrapM: string;
-  wrapS: string;
-  wrapXS: string;
-  config: ColumnsConfigProps;
-}
+  wrap: string;
+  config: UnflexibleProviderConfig;
+};
 
 const Component = styled.div<ComponentProps>`
+  :global() {
+    :root {
+      --unflexible-ui-core-columns-base-gap: 16px;
+    }
+  }
+
   display: flex;
-  flex-wrap: ${(props) => props.wrapXL};
-  align-items: ${(props) => props.align};
-  justify-content: ${(props) => props.justify};
-  gap: ${(props) => `calc(${props.config.gap[props.gap]} * ${props.config.gapRate.xl})`};
+  flex-wrap: ${(p) => p.wrap};
+  align-items: ${(p) => p.align};
+  justify-content: ${(p) => p.justify};
+  gap: var(--unflexible-ui-core-columns-base-gap) * ${(p) => p.gap};
 
-  ${(props) =>
-    props.repeat &&
-    `
+  > * {
+    width: ${(p) =>
+      p.repeatXL
+        ? `calc(
+      (100% - ${p.repeatXL - 1} * var(--unflexible-ui-core-columns-base-gap) * ${p.gap}) /
+        ${p.repeatXL}
+    )`
+        : 'auto'};
+  }
+
+  @media only screen and (max-width: ${(p) => p.config.breakpoints.l}px) {
     > * {
-      width: calc((100% - ${props.repeat - 1} * ${props.config.gap[props.gap]} * ${
-      props.config.gapRate.xl
-    }) / ${props.repeat});
+      width: ${(p) =>
+        p.repeatL
+          ? `calc(
+      (100% - ${p.repeatL - 1} * var(--unflexible-ui-core-columns-base-gap) * ${p.gap}) /
+        ${p.repeatL}
+    )`
+          : 'auto'};
     }
-  `}
+  }
 
-  ${(props) =>
-    props.repeatXL &&
-    `
+  @media only screen and (max-width: ${(p) => p.config.breakpoints.m}px) {
     > * {
-      width: calc((100% - ${props.repeatXL - 1} * ${props.config.gap[props.gap]} * ${
-      props.config.gapRate.xl
-    }) / ${props.repeatXL});
+      width: ${(p) =>
+        p.repeatM
+          ? `calc(
+      (100% - ${p.repeatM - 1} * var(--unflexible-ui-core-columns-base-gap) * ${p.gap}) /
+        ${p.repeatM}
+    )`
+          : 'auto'};
     }
-  `}
-
-  @media only screen and (max-width: ${screen.l}px) {
-    flex-wrap: ${(props) => props.wrapL};
-    gap: ${(props) => `calc(${props.config.gap[props.gap]} * ${props.config.gapRate.l})`};
-
-    ${(props) =>
-      props.repeatL &&
-      `
-      > * {
-        width: calc((100% - ${props.repeatL - 1} * ${props.config.gap[props.gap]} * ${
-        props.config.gapRate.l
-      }) / ${props.repeatL});
-      }
-    `}
   }
 
-  @media only screen and (max-width: ${screen.m}px) {
-    flex-wrap: ${(props) => props.wrapM};
-    gap: ${(props) => `calc(${props.config.gap[props.gap]} * ${props.config.gapRate.m})`};
-
-    ${(props) =>
-      props.repeatM &&
-      `
-      > * {
-        width: calc((100% - ${props.repeatM - 1} * ${props.config.gap[props.gap]} * ${
-        props.config.gapRate.m
-      }) / ${props.repeatM});
-      }
-    `}
+  @media only screen and (max-width: ${(p) => p.config.breakpoints.s}px) {
+    > * {
+      width: ${(p) =>
+        p.repeatS
+          ? `calc(
+      (100% - ${p.repeatS - 1} * var(--unflexible-ui-core-columns-base-gap) * ${p.gap}) /
+        ${p.repeatS}
+    )`
+          : 'auto'};
+    }
   }
 
-  @media only screen and (max-width: ${screen.s}px) {
-    flex-wrap: ${(props) => props.wrapS};
-    gap: ${(props) => `calc(${props.config.gap[props.gap]} * ${props.config.gapRate.s})`};
-
-    ${(props) =>
-      props.repeatS &&
-      `
-      > * {
-        width: calc((100% - ${props.repeatS - 1} * ${props.config.gap[props.gap]} * ${
-        props.config.gapRate.s
-      }) / ${props.repeatS});
-      }
-    `}
-  }
-
-  @media only screen and (max-width: ${screen.xs}px) {
-    flex-wrap: ${(props) => props.wrapXS};
-    gap: ${(props) => `calc(${props.config.gap[props.gap]} * ${props.config.gapRate.xs})`};
-
-    ${(props) =>
-      props.repeatXS &&
-      `
-      > * {
-        width: calc((100% - ${props.repeatXS - 1} * ${props.config.gap[props.gap]} * ${
-        props.config.gapRate.xs
-      }) / ${props.repeatXS});
-      }
-    `}
+  @media only screen and (max-width: ${(p) => p.config.breakpoints.xs}px) {
+    > * {
+      width: ${(p) =>
+        p.repeatXS
+          ? `calc(
+      (100% - ${p.repeatXS - 1} * var(--unflexible-ui-core-columns-base-gap) * ${p.gap}) /
+        ${p.repeatXS}
+    )`
+          : 'auto'};
+    }
   }
 `;
