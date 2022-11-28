@@ -1,117 +1,52 @@
 import React from 'react';
-import styled from 'styled-components';
+import { styled } from '@linaria/react';
 import { Wrap } from '../Wrap';
-import { screen } from 'lib/config';
-import { Config } from 'components/UnflexibleProvider';
-
-export interface StackedConfigProps {
-  padding: {
-    [key: string]: string;
-  };
-  paddingRate: {
-    xl: number;
-    l: number;
-    m: number;
-    s: number;
-    xs: number;
-  };
-  gap: {
-    [key: string]: string;
-  };
-  gapRate: {
-    xl: number;
-    l: number;
-    m: number;
-    s: number;
-    xs: number;
-  };
-}
-
-const defaultConfig: StackedConfigProps = {
-  padding: {
-    wide: '180px',
-    normal: '120px',
-    narrow: '60px',
-    thin: '30px',
-  },
-  paddingRate: {
-    xl: 1,
-    l: 1,
-    m: 0.5,
-    s: 0.5,
-    xs: 0.5,
-  },
-  gap: {
-    wide: '3rem',
-    normal: '1.5rem',
-    narrow: '1rem',
-    thin: '.5rem',
-  },
-  gapRate: {
-    xl: 1,
-    l: 1,
-    m: 0.5,
-    s: 0.5,
-    xs: 0.5,
-  },
-};
 
 export interface StackedProps {
-  paddingSize?: string;
-  paddingPos?: string;
+  padding?: [number, number];
   color?: string;
   height?: string;
   gradient?: string;
   zIndex?: number;
-  imageSrc?: any;
-  imageSrcSet?: string;
-  imageSize?: string;
-  imagePos?: string;
+  image: StackedBackgroundImage;
   wrap?: boolean;
+  style?: any;
   children?: React.ReactNode;
 }
 
+export type StackedBackgroundImage = {
+  src: string;
+  srcSet?: string;
+  size?: string;
+  position?: string;
+};
+
 export const Stacked = ({
-  paddingSize,
-  paddingPos,
+  padding,
   color,
   height,
   gradient,
   zIndex,
-  imageSrc,
-  imageSrcSet,
-  imageSize,
-  imagePos,
+  image,
   wrap,
+  style,
   children,
 }: StackedProps) => {
-  const context = React.useContext(Config);
-
-  let config: StackedConfigProps = defaultConfig;
-  if (context.stacked) {
-    config = {
-      ...config,
-      ...context.stacked,
-    };
-  }
-
   return (
     <Component
-      paddingPos={paddingPos || 'both'}
-      paddingSize={paddingSize || 'normal'}
+      padding={padding || [0, 0]}
       color={color || 'transparent'}
       gradient={gradient}
       zIndex={zIndex || 1}
       height={height || 'auto'}
-      imageSize={imageSize || 'cover'}
-      imagePos={imagePos || '50% 50%'}
-      config={config}
+      image={image}
+      style={style}
     >
-      {imageSrc && (
+      {image && (
         <img
           className="stacked--background"
-          src={imageSrc}
-          srcSet={imageSrcSet || undefined}
+          src={image.src}
+          srcSet={image.srcSet || undefined}
           alt="背景"
         />
       )}
@@ -121,46 +56,34 @@ export const Stacked = ({
 };
 
 interface ComponentProps {
-  paddingSize: string;
-  paddingPos: string;
+  padding: [number, number];
   color: string;
   height: string;
   gradient?: string;
   zIndex: number;
-  imageSize: string;
-  imagePos: string;
-  config: StackedConfigProps;
+  image?: StackedBackgroundImage;
 }
 
 const Component = styled.div<ComponentProps>`
+  :global() {
+    :root {
+      --unflexible-ui-core-stacked-base-padding: 32px;
+    }
+  }
+
   position: relative;
-  z-index: ${(props) => props.zIndex};
+  z-index: ${(p) => p.zIndex};
 
   display: flex;
   flex-wrap: nowrap;
   align-items: center;
   width: 100%;
-  height: ${(props) => props.height};
+  height: ${(p) => p.height};
 
-  padding: ${(props) =>
-      `calc(${props.config.padding[props.paddingSize] || 0} * ${props.config.paddingRate.xl})`}
-    0;
+  padding: 0 calc(var(--unflexible-ui-core-stacked-base-padding-xl) * ${(p) => p.padding[0]}) 0
+    calc(var(--unflexible-ui-core-stacked-base-padding-xl) * ${(p) => p.padding[1]});
 
-  ${(props) => {
-    switch (props.paddingPos) {
-      case 'top':
-        return 'padding-bottom: 0 !important;';
-      case 'bottom':
-        return 'padding-top: 0 !important;';
-      case 'none':
-        return 'padding: 0 !important;';
-      default:
-        return '';
-    }
-  }}
-
-  background-color: ${(props) => props.color};
-  ${(props) => (props.gradient ? `background: linear-gradient(${props.gradient});` : '')}
+  background: ${(p) => (p.gradient ? `linear-gradient(${p.gradient})` : p.color)};
 
   > * {
     display: block;
@@ -175,32 +98,8 @@ const Component = styled.div<ComponentProps>`
     display: block;
     width: 100%;
     height: 100%;
-    object-fit: ${(props) => props.imageSize};
-    object-position: ${(props) => props.imagePos};
-  }
-
-  @media only screen and (max-width: ${screen.l}px) {
-    padding: ${(props) =>
-        `calc(${props.config.padding[props.paddingSize] || 0} * ${props.config.paddingRate.l})`}
-      0;
-  }
-
-  @media only screen and (max-width: ${screen.m}px) {
-    padding: ${(props) =>
-        `calc(${props.config.padding[props.paddingSize] || 0} * ${props.config.paddingRate.m})`}
-      0;
-  }
-
-  @media only screen and (max-width: ${screen.s}px) {
-    padding: ${(props) =>
-        `calc(${props.config.padding[props.paddingSize] || 0} * ${props.config.paddingRate.s})`}
-      0;
-  }
-
-  @media only screen and (max-width: ${screen.xs}px) {
-    padding: ${(props) =>
-        `calc(${props.config.padding[props.paddingSize] || 0} * ${props.config.paddingRate.xs})`}
-      0;
+    object-fit: ${(p: any) => p.image?.size};
+    object-position: ${(p: any) => p.image?.position};
   }
 `;
 

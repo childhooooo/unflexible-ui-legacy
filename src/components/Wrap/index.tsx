@@ -1,64 +1,46 @@
 import React from 'react';
-import styled from 'styled-components';
-import { screen } from 'lib/config';
+import { styled } from '@linaria/react';
 import { Config } from 'components/UnflexibleProvider';
-
-export interface WrapConfigProps {
-  widthXL: string;
-  widthL: string;
-  widthM: string;
-  widthS: string;
-  widthXS: string;
-}
-
-const defaultConfig: WrapConfigProps = {
-  widthXL: '1240px',
-  widthL: '1030px',
-  widthM: '760px',
-  widthS: '470px',
-  widthXS: '94%',
-};
+import { UnflexibleProviderConfig } from 'config';
 
 export interface WrapProps {
   children?: React.ReactNode;
 }
 
 export const Wrap = ({ children }: WrapProps) => {
-  const context = React.useContext(Config);
-
-  let config: WrapConfigProps = defaultConfig;
-  if (context.wrap) {
-    config = {
-      ...config,
-      ...context.wrap,
-    };
-  }
+  const config = React.useContext(Config);
 
   return <Component config={config}>{children}</Component>;
 };
 
-interface ComponentProps {
-  config: WrapConfigProps;
-}
+const Component = styled.div<{ config: UnflexibleProviderConfig }>`
+  :global() {
+    :root {
+      --unflexible-ui-core-wrap-xl: 1240px;
+      --unflexible-ui-core-wrap-l: 1030px;
+      --unflexible-ui-core-wrap-m: 760px;
+      --unflexible-ui-core-wrap-s: 470px;
+      --unflexible-ui-core-wrap-xs: 94%;
+    }
+  }
 
-const Component = styled.div<ComponentProps>`
   position: relative;
   margin: 0 auto;
-  width: ${(props) => props.config.widthXL};
+  width: var(--unflexible-ui-core-wrap-xl);
 
-  @media only screen and (max-width: ${screen.l}px) {
-    width: ${(props) => props.config.widthL};
+  @media only screen and (max-width: ${(p) => p.config.breakpoints.l}px) {
+    width: var(--unflexible-ui-core-wrap-l);
   }
 
-  @media only screen and (max-width: ${screen.m}px) {
-    width: ${(props) => props.config.widthM};
+  @media only screen and (max-width: ${(p) => p.config.breakpoints.m}px) {
+    width: var(--unflexible-ui-core-wrap-m);
   }
 
-  @media only screen and (max-width: ${screen.s}px) {
-    width: ${(props) => props.config.widthS};
+  @media only screen and (max-width: ${(p) => p.config.breakpoints.s}px) {
+    width: var(--unflexible-ui-core-wrap-s);
   }
 
-  @media only screen and (max-width: ${screen.xs}px) {
-    width: ${(props) => props.config.widthXS};
+  @media only screen and (max-width: ${(p) => p.config.breakpoints.xs}px) {
+    width: var(--unflexible-ui-core-wrap-xs);
   }
 `;

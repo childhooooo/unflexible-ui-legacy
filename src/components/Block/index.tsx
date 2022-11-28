@@ -1,6 +1,7 @@
 import React from 'react';
-import styled from 'styled-components';
-import { screen } from 'lib/config';
+import { styled } from '@linaria/react';
+import { Config } from 'components/UnflexibleProvider';
+import { UnflexibleProviderConfig } from 'config';
 
 export interface BlockProps {
   width?: string;
@@ -31,19 +32,21 @@ export const Block = ({
   grow,
   children,
 }: BlockProps) => {
+  const config = React.useContext(Config);
+
   return (
     <Component
-      width={width}
-      widthXL={widthXL}
-      widthL={widthL}
-      widthM={widthM}
-      widthS={widthS}
-      widthXS={widthXS}
+      widthXL={widthXL || width}
+      widthL={widthL || widthXL || width}
+      widthM={widthM || widthL || widthXL || width}
+      widthS={widthS || widthM || widthL || widthXL || width}
+      widthXS={widthXS || widthS || widthM || widthL || widthXL || width}
       maxWidth={maxWidth}
       height={height || 'auto'}
       fixRatio={fixRatio || false}
       shrink={shrink || 0}
       grow={grow || 0}
+      config={config}
     >
       <div>{children}</div>
     </Component>
@@ -51,7 +54,6 @@ export const Block = ({
 };
 
 interface ComponentProps {
-  width?: string;
   widthXL?: string;
   widthL?: string;
   widthM?: string;
@@ -62,69 +64,45 @@ interface ComponentProps {
   fixRatio: boolean;
   shrink: number;
   grow: number;
+  config: UnflexibleProviderConfig;
 }
 
 const Component = styled.div<ComponentProps>`
   position: relative;
-  ${(props) => props.width && `width: ${props.width};`};
-  ${(props) => props.widthXL && `width: ${props.widthXL};`};
-  ${(props) => props.maxWidth && `max-width: ${props.maxWidth};`};
-  flex-shrink: ${(props) => props.shrink};
-  flex-grow: ${(props) => props.grow};
+  width: ${(p) => p.widthXL || 'auto'};
+  max-width: ${(p) => p.maxWidth || 'auto'};
+  flex-shrink: ${(p) => p.shrink};
+  flex-grow: ${(p) => p.grow};
 
   > div {
-    position: relative;
-    height: ${(props) => props.height};
+    position: ${(p) => (p.fixRatio ? 'absolute' : 'relative')};
+    height: ${(p) => p.height};
+    top: ${(p) => (p.fixRatio ? 0 : 'auto')};
+    left: ${(p) => (p.fixRatio ? 0 : 'auto')};
+    height: ${(p) => (p.fixRatio ? '100%' : p.height)};
+    width: 100%;
   }
 
-  ${(props) =>
-    props.fixRatio &&
-    `
   &:before {
     position: relative;
-    display: block;
+    display: ${(p) => (p.fixRatio ? 'block' : 'none')};
     content: '';
-    padding-top: ${props.height};
+    padding-top: ${(p) => p.height};
   }
 
-  > div {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
+  @media only screen and (max-width: ${(p) => p.config.breakpoints.l}px) {
+    width: ${(p) => p.widthL || 'auto'};
   }
-`}
 
-  ${(props) =>
-    props.widthL &&
-    `
-  @media only screen and (max-width: ${screen.l}px) {
-    width: ${props.widthL};
+  @media only screen and (max-width: ${(p) => p.config.breakpoints.m}px) {
+    width: ${(p) => p.widthM || 'auto'};
   }
-`}
 
-${(props) =>
-    props.widthM &&
-    `
-  @media only screen and (max-width: ${screen.m}px) {
-    width: ${props.widthM};
+  @media only screen and (max-width: ${(p) => p.config.breakpoints.s}px) {
+    width: ${(p) => p.widthS || 'auto'};
   }
-`}
 
-${(props) =>
-    props.widthS &&
-    `
-  @media only screen and (max-width: ${screen.s}px) {
-    width: ${props.widthS};
+  @media only screen and (max-width: ${(p) => p.config.breakpoints.xs}px) {
+    width: ${(p) => p.widthXS || 'auto'};
   }
-`}
-
-${(props) =>
-    props.widthXS &&
-    `
-  @media only screen and (max-width: ${screen.xs}px) {
-    width: ${props.widthXS};
-  }
-`}
 `;

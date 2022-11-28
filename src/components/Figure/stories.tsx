@@ -10,7 +10,7 @@ export default {
 
 const Template: Story<FigureProps> = (args) => {
   return (
-    <UnflexibleProvider config={{}}>
+    <UnflexibleProvider>
       <Figure {...args} />
     </UnflexibleProvider>
   );

@@ -1,4 +1,7 @@
 const TsconfigPathsPlugin = require('tsconfig-paths-webpack-plugin');
+const { register } = require('esbuild-register/dist/node');
+
+register({ target: 'es6' });
 
 module.exports = {
   stories: ['../src/components/**/stories.@(tsx|jsx|ts|js)'],
