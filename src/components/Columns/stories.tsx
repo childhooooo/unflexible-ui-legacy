@@ -10,7 +10,7 @@ export default {
 
 const Template: Story<ColumnsProps> = (args) => {
   return (
-    <UnflexibleProvider>
+    <UnflexibleProvider config={{}}>
       <Columns {...args} />
     </UnflexibleProvider>
   );

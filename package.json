@@ -3,7 +3,7 @@
   "version": "0.2.4",
   "description": "Don't be flexible.",
   "main": "build/index.js",
-  "module": "build/index.esm.js",
+  "module": "build/index.es.js",
   "types": "build/index.d.ts",
   "files": [
     "build"
@@ -16,8 +16,6 @@
     "@babel/polyfill": "^7.12.1",
     "@babel/preset-env": "^7.19.4",
     "@babel/preset-react": "^7.18.6",
-    "@linaria/esbuild": "^4.2.2",
-    "@linaria/stylelint-config-standard-linaria": "^4.1.4",
     "@rollup/plugin-babel": "^6.0.0",
     "@rollup/plugin-commonjs": "^23.0.0",
     "@rollup/plugin-node-resolve": "^15.0.0",
@@ -28,16 +26,18 @@
     "@storybook/addon-viewport": "^6.5.12",
     "@storybook/cli": "^6.5.12",
     "@storybook/react": "^6.5.12",
+    "@stylelint/postcss-css-in-js": "^0.38.0",
     "@types/jest": "^29.2.0",
     "@types/node": "^18.11.2",
     "@types/react": "^18.0.21",
     "@types/react-dom": "^18.0.6",
     "@types/storybook__react": "^5.2.1",
+    "@types/styled-components": "^5.1.26",
     "@typescript-eslint/eslint-plugin": "^5.40.1",
     "@typescript-eslint/parser": "^5.40.1",
     "babel-loader": "^8.2.5",
+    "babel-plugin-styled-components": "^2.0.7",
     "core-js": "^3.25.5",
-    "esbuild-register": "^3.4.1",
     "eslint": "^8.25.0",
     "eslint-config-prettier": "^8.5.0",
     "eslint-config-react-app": "^7.0.1",
@@ -62,8 +62,10 @@
     "rollup-plugin-peer-deps-external": "^2.2.4",
     "rollup-plugin-postcss": "^4.0.2",
     "rollup-plugin-typescript2": "^0.34.1",
+    "styled-components": "^5.3.6",
     "stylelint": "^14.14.0",
     "stylelint-config-standard": "^29.0.0",
+    "stylelint-config-styled-components": "^0.1.1",
     "tsconfig-paths-webpack-plugin": "^4.0.0",
     "typescript": "^4.8.4"
   },
@@ -71,11 +73,9 @@
     "dev": "run-p storybook build:watch",
     "storybook": "start-storybook -p 56006",
     "build-storybook": "build-storybook",
-    "build": "run-p build:esbuild build:types",
-    "build:watch": "WATCH=true npm run build:esbuild",
-    "build:esbuild": "node --require esbuild-register build.ts",
-    "build:types": "tsc --declaration --emitDeclarationOnly --declarationDir './build'",
-    "prepare": "npm run build",
+    "build": "rollup -c --bundleConfigAsCjs",
+    "build:watch": "rollup -c -w --bundleConfigAsCjs",
+    "prepare": "rollup -c --bundleConfigAsCjs",
     "fix": "run-s fix:prettier fix:eslint fix:stylelint",
     "fix:eslint": "npm run lint:eslint -- --fix",
     "fix:prettier": "npm run lint:prettier -- --write",
@@ -85,6 +85,11 @@
     "lint:prettier": "prettier --check .",
     "lint:stylelint": "stylelint './src/**/*.{jsx,tsx}'",
     "stylelint": "stylelint"
+  },
+  "peerDependencies": {
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "styled-components": "^5.3.6"
   },
   "eslintConfig": {
     "parser": "@typescript-eslint/parser",
@@ -107,10 +112,5 @@
     "Firefox ESR",
     "not dead",
     "ie >= 11"
-  ],
-  "dependencies": {
-    "@linaria/babel-preset": "^4.3.0",
-    "@linaria/core": "^4.2.2",
-    "@linaria/react": "^4.3.0"
-  }
+  ]
 }

@@ -10,7 +10,7 @@ export default {
 
 const Template: Story<StackedProps> = (args) => {
   return (
-    <UnflexibleProvider>
+    <UnflexibleProvider config={{}}>
       <Stacked {...args} />
     </UnflexibleProvider>
   );
