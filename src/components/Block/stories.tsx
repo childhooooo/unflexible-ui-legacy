@@ -10,7 +10,7 @@ export default {
 
 const Template: Story<BlockProps> = (args) => {
   return (
-    <UnflexibleProvider>
+    <UnflexibleProvider config={{}}>
       <Block {...args} />
     </UnflexibleProvider>
   );

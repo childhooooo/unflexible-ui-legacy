@@ -10,7 +10,7 @@ export default {
 
 const Template: Story<WrapProps> = (args) => {
   return (
-    <UnflexibleProvider>
+    <UnflexibleProvider config={{}}>
       <Wrap {...args} />
     </UnflexibleProvider>
   );
