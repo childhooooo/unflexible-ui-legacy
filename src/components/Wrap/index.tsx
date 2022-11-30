@@ -1,64 +1,49 @@
-import React from 'react';
-import styled from 'styled-components';
-import { screen } from 'lib/config';
-import { Config } from 'components/UnflexibleProvider';
+import { ReactNode, useContext } from "react";
+import { styled } from "@linaria/react";
+import { InitialPropsContext, ViewPortContext } from "..//UnflexibleProvider";
+import { ValuesForScreens } from "../../lib/screen";
+import { selectValueOfScreen } from "../../lib/util";
 
-export interface WrapConfigProps {
-  widthXL: string;
-  widthL: string;
-  widthM: string;
-  widthS: string;
-  widthXS: string;
-}
-
-const defaultConfig: WrapConfigProps = {
-  widthXL: '1240px',
-  widthL: '1030px',
-  widthM: '760px',
-  widthS: '470px',
-  widthXS: '94%',
+export type WrapProps = {
+  width?: ValuesForScreens<string>;
+  children?: ReactNode;
 };
 
-export interface WrapProps {
-  children?: React.ReactNode;
-}
-
-export const Wrap = ({ children }: WrapProps) => {
-  const context = React.useContext(Config);
-
-  let config: WrapConfigProps = defaultConfig;
-  if (context.wrap) {
-    config = {
-      ...config,
-      ...context.wrap,
-    };
-  }
-
-  return <Component config={config}>{children}</Component>;
+export const initialWrapProps = {
+  width: {
+    xl: "1240px",
+    l: "1030px",
+    m: "760px",
+    s: "470px",
+    xs: "94%",
+  },
 };
 
-interface ComponentProps {
-  config: WrapConfigProps;
-}
+export const Wrap = (props: WrapProps) => {
+  const initialProps = useContext(InitialPropsContext);
+  const viewPort = useContext(ViewPortContext);
 
-const Component = styled.div<ComponentProps>`
+  return (
+    <WrapComponent
+      width={
+        selectValueOfScreen(
+          initialProps.wrap.width,
+          props.width,
+          viewPort.screen
+        ) || "inherit"
+      }
+    >
+      {props.children}
+    </WrapComponent>
+  );
+};
+
+type WrapComponentProps = {
+  width: string;
+};
+
+const WrapComponent = styled.div<WrapComponentProps>`
   position: relative;
   margin: 0 auto;
-  width: ${(props) => props.config.widthXL};
-
-  @media only screen and (max-width: ${screen.l}px) {
-    width: ${(props) => props.config.widthL};
-  }
-
-  @media only screen and (max-width: ${screen.m}px) {
-    width: ${(props) => props.config.widthM};
-  }
-
-  @media only screen and (max-width: ${screen.s}px) {
-    width: ${(props) => props.config.widthS};
-  }
-
-  @media only screen and (max-width: ${screen.xs}px) {
-    width: ${(props) => props.config.widthXS};
-  }
+  width: ${(p) => p.width};
 `;

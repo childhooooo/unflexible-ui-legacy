@@ -1,130 +1,101 @@
-import React from 'react';
-import styled from 'styled-components';
-import { screen } from 'lib/config';
+import { ReactNode, useContext } from "react";
+import { styled } from "@linaria/react";
+import { InitialPropsContext, ViewPortContext } from "../UnflexibleProvider";
+import { selectValueOfScreen } from "../../lib/util";
+import { ValuesForScreens } from "../../lib/screen";
 
-export interface BlockProps {
-  width?: string;
-  widthXL?: string;
-  widthL?: string;
-  widthM?: string;
-  widthS?: string;
-  widthXS?: string;
+export type BlockProps = {
+  width?: ValuesForScreens<string>;
   maxWidth?: string;
-  height?: string;
+  height?: ValuesForScreens<string>;
+  padding?: ValuesForScreens<[number, number, number, number]>;
   fixRatio?: boolean;
   shrink?: number;
   grow?: number;
-  children?: React.ReactNode;
-}
+  color?: string;
+  basePadding?: string;
+  children?: ReactNode;
+};
 
-export const Block = ({
-  width,
-  widthXL,
-  widthL,
-  widthM,
-  widthS,
-  widthXS,
-  maxWidth,
-  height,
-  fixRatio,
-  shrink,
-  grow,
-  children,
-}: BlockProps) => {
+export const initialBlockProps: BlockProps = {
+  basePadding: "32px",
+};
+
+export const Block = (props: BlockProps) => {
+  const initialProps = useContext(InitialPropsContext);
+  const viewPort = useContext(ViewPortContext);
+
   return (
-    <Component
-      width={width}
-      widthXL={widthXL}
-      widthL={widthL}
-      widthM={widthM}
-      widthS={widthS}
-      widthXS={widthXS}
-      maxWidth={maxWidth}
-      height={height || 'auto'}
-      fixRatio={fixRatio || false}
-      shrink={shrink || 0}
-      grow={grow || 0}
+    <BlockComponent
+      width={
+        selectValueOfScreen<string>(
+          initialProps.block.width,
+          props.width,
+          viewPort.screen
+        ) || "inherit"
+      }
+      maxWidth={props.maxWidth || "inherit"}
+      height={
+        selectValueOfScreen<string>(
+          initialProps.block.height,
+          props.height,
+          viewPort.screen
+        ) || "inherit"
+      }
+      padding={
+        selectValueOfScreen<[number, number, number, number]>(
+          initialProps.block.padding,
+          props.padding,
+          viewPort.screen
+        ) || [0, 0, 0, 0]
+      }
+      fixRatio={props.fixRatio || initialProps.block.fixRatio || false}
+      shrink={props.shrink || initialProps.block.shrink || "inherit"}
+      grow={props.grow || initialProps.block.grow || "inherit"}
+      color={props.color || initialProps.block.color || "transparent"}
+      basePadding={props.basePadding || initialProps.block.basePadding || "0px"}
     >
-      <div>{children}</div>
-    </Component>
+      <div>{props.children}</div>
+    </BlockComponent>
   );
 };
 
-interface ComponentProps {
-  width?: string;
-  widthXL?: string;
-  widthL?: string;
-  widthM?: string;
-  widthS?: string;
-  widthXS?: string;
-  maxWidth?: string;
+type BlockComponentProps = {
+  width: string;
+  maxWidth: string;
   height: string;
+  padding: [number, number, number, number];
   fixRatio: boolean;
-  shrink: number;
-  grow: number;
-}
+  shrink: number | string;
+  grow: number | string;
+  color: string;
+  basePadding: string;
+};
 
-const Component = styled.div<ComponentProps>`
+const BlockComponent = styled.div<BlockComponentProps>`
   position: relative;
-  ${(props) => props.width && `width: ${props.width};`};
-  ${(props) => props.widthXL && `width: ${props.widthXL};`};
-  ${(props) => props.maxWidth && `max-width: ${props.maxWidth};`};
-  flex-shrink: ${(props) => props.shrink};
-  flex-grow: ${(props) => props.grow};
+  max-width: ${(p) => p.maxWidth};
+  flex-shrink: ${(p) => p.shrink};
+  flex-grow: ${(p) => p.grow};
 
   > div {
-    position: relative;
-    height: ${(props) => props.height};
+    position: ${(p) => (p.fixRatio ? "absolute" : "relative")};
+    height: ${(p) => p.height};
+    top: ${(p) => (p.fixRatio ? 0 : "auto")};
+    left: ${(p) => (p.fixRatio ? 0 : "auto")};
+    height: ${(p) => (p.fixRatio ? "100%" : p.height)};
+    width: ${(p) => p.width};
+    padding: calc(${(p) => p.basePadding} * ${(p) => p.padding[0]})
+      calc(${(p) => p.basePadding} * ${(p) => p.padding[1]})
+      calc(${(p) => p.basePadding} * ${(p) => p.padding[2]})
+      calc(${(p) => p.basePadding} * ${(p) => p.padding[3]});
+    background-color: ${(p) => p.color};
   }
 
-  ${(props) =>
-    props.fixRatio &&
-    `
   &:before {
     position: relative;
-    display: block;
-    content: '';
-    padding-top: ${props.height};
+    display: ${(p) => (p.fixRatio ? "block" : "none")};
+    content: "";
+    padding-top: ${(p) => p.height};
   }
-
-  > div {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-  }
-`}
-
-  ${(props) =>
-    props.widthL &&
-    `
-  @media only screen and (max-width: ${screen.l}px) {
-    width: ${props.widthL};
-  }
-`}
-
-${(props) =>
-    props.widthM &&
-    `
-  @media only screen and (max-width: ${screen.m}px) {
-    width: ${props.widthM};
-  }
-`}
-
-${(props) =>
-    props.widthS &&
-    `
-  @media only screen and (max-width: ${screen.s}px) {
-    width: ${props.widthS};
-  }
-`}
-
-${(props) =>
-    props.widthXS &&
-    `
-  @media only screen and (max-width: ${screen.xs}px) {
-    width: ${props.widthXS};
-  }
-`}
 `;
