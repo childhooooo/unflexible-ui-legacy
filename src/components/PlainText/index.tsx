@@ -1,606 +1,397 @@
-import React from 'react';
-import styled from 'styled-components';
-import { screen, color, font } from 'lib/config';
-import { Config } from 'components/UnflexibleProvider';
+import { ReactNode, useContext } from "react";
+import { styled } from "@linaria/react";
+import { InitialPropsContext, ViewPortContext } from "../UnflexibleProvider";
+import { selectValueOfTag, selectValueOfTagOfScreen } from "../../lib/util";
+import { ValuesForScreens } from "../../lib/screen";
+import {
+  ValuesForTextTags,
+  TextTag,
+  textTagsAsString,
+} from "../../lib/textTag";
 
-interface EachSizes {
-  xl: string;
-  l: string;
-  m: string;
-  s: string;
-  xs: string;
-}
-
-export interface PlainTextConfigProps {
-  baseSize: EachSizes;
-  h1Size: EachSizes;
-  h2Size: EachSizes;
-  h3Size: EachSizes;
-  h4Size: EachSizes;
-  h5Size: EachSizes;
-  baseWeight: string;
-  h1Weight: string;
-  h2Weight: string;
-  h3Weight: string;
-  h4Weight: string;
-  h5Weight: string;
-  baseAlign: string;
-  h1Align: string;
-  h2Align: string;
-  h3Align: string;
-  h4Align: string;
-  h5Align: string;
-  baseColor: string;
-  h1Color: string;
-  h2Color: string;
-  h3Color: string;
-  h4Color: string;
-  h5Color: string;
-  baseFamily: string;
-  h1Family: string;
-  h2Family: string;
-  h3Family: string;
-  h4Family: string;
-  h5Family: string;
-  baseLineHeight: string;
-  h1LineHeight: string;
-  h2LineHeight: string;
-  h3LineHeight: string;
-  h4LineHeight: string;
-  h5LineHeight: string;
-  baseMargin: string;
-  h1Margin: string;
-  h2Margin: string;
-  h3Margin: string;
-  h4Margin: string;
-  h5Margin: string;
-  baseStrongRate: string;
-  h1StrongRate: string;
-  h2StrongRate: string;
-  h3StrongRate: string;
-  h4StrongRate: string;
-  h5StrongRate: string;
-  baseLetterSpacing: string;
-  h1LetterSpacing: string;
-  h2LetterSpacing: string;
-  h3LetterSpacing: string;
-  h4LetterSpacing: string;
-  h5LetterSpacing: string;
-}
-
-const defaultConfig: PlainTextConfigProps = {
-  baseSize: {
-    xl: '1rem',
-    l: '1rem',
-    m: '1rem',
-    s: '1rem',
-    xs: '1rem',
-  },
-  h1Size: {
-    xl: '2.25rem',
-    l: '2.25rem',
-    m: '2.25rem',
-    s: '1.75rem',
-    xs: '1.75rem',
-  },
-  h2Size: {
-    xl: '2rem',
-    l: '2rem',
-    m: '2rem',
-    s: '1.5rem',
-    xs: '1.5rem',
-  },
-  h3Size: {
-    xl: '1.5rem',
-    l: '1.5rem',
-    m: '1.5rem',
-    s: '1.25rem',
-    xs: '1.25rem',
-  },
-  h4Size: {
-    xl: '1.25rem',
-    l: '1.25rem',
-    m: '1.25rem',
-    s: '1.1rem',
-    xs: '1.1rem',
-  },
-  h5Size: {
-    xl: '1rem',
-    l: '1rem',
-    m: '1rem',
-    s: '1rem',
-    xs: '1rem',
-  },
-  baseWeight: '400',
-  h1Weight: '700',
-  h2Weight: '700',
-  h3Weight: '700',
-  h4Weight: '700',
-  h5Weight: '700',
-  baseAlign: 'left',
-  h1Align: 'left',
-  h2Align: 'left',
-  h3Align: 'left',
-  h4Align: 'left',
-  h5Align: 'left',
-  baseColor: color.black,
-  h1Color: color.black,
-  h2Color: color.black,
-  h3Color: color.black,
-  h4Color: color.black,
-  h5Color: color.black,
-  baseFamily: font.sansSerif,
-  h1Family: font.sansSerif,
-  h2Family: font.sansSerif,
-  h3Family: font.sansSerif,
-  h4Family: font.sansSerif,
-  h5Family: font.sansSerif,
-  baseLineHeight: '1.5',
-  h1LineHeight: '1.5',
-  h2LineHeight: '1.5',
-  h3LineHeight: '1.5',
-  h4LineHeight: '1.5',
-  h5LineHeight: '1.5',
-  baseMargin: '1rem 0 1rem 0',
-  h1Margin: '2rem 0 1rem 0',
-  h2Margin: '2rem 0 1rem 0',
-  h3Margin: '2rem 0 1rem 0',
-  h4Margin: '2rem 0 1rem 0',
-  h5Margin: '2rem 0 1rem 0',
-  baseStrongRate: '1.25',
-  h1StrongRate: '1.25',
-  h2StrongRate: '1.25',
-  h3StrongRate: '1.25',
-  h4StrongRate: '1.25',
-  h5StrongRate: '1.25',
-  baseLetterSpacing: '0',
-  h1LetterSpacing: '0',
-  h2LetterSpacing: '0',
-  h3LetterSpacing: '0',
-  h4LetterSpacing: '0',
-  h5LetterSpacing: '0',
+export type PlainTextProps = {
+  text?: string;
+  margin?: ValuesForTextTags<[number, number, number, number]>;
+  fontSize?: ValuesForTextTags<ValuesForScreens<number>>;
+  color?: ValuesForTextTags<string>;
+  fontWeight?: ValuesForTextTags<number>;
+  fontFamily?: ValuesForTextTags<string>;
+  lineHeight?: ValuesForTextTags<number>;
+  textAlign?: ValuesForTextTags<string>;
+  letterSpacing?: ValuesForTextTags<string>;
+  liPadding?: number;
+  baseMargin?: string;
+  baseLiPadding?: string;
+  mediaWidth?: string;
+  children?: ReactNode;
 };
 
-export interface PlainTextProps {
-  text?: string;
-  baseSizeXL?: string;
-  h1SizeXL?: string;
-  h2SizeXL?: string;
-  h3SizeXL?: string;
-  h4SizeXL?: string;
-  h5SizeXL?: string;
-  baseSizeL?: string;
-  h1SizeL?: string;
-  h2SizeL?: string;
-  h3SizeL?: string;
-  h4SizeL?: string;
-  h5SizeL?: string;
-  baseSizeM?: string;
-  h1SizeM?: string;
-  h2SizeM?: string;
-  h3SizeM?: string;
-  h4SizeM?: string;
-  h5SizeM?: string;
-  baseSizeS?: string;
-  h1SizeS?: string;
-  h2SizeS?: string;
-  h3SizeS?: string;
-  h4SizeS?: string;
-  h5SizeS?: string;
-  baseSizeXS?: string;
-  h1SizeXS?: string;
-  h2SizeXS?: string;
-  h3SizeXS?: string;
-  h4SizeXS?: string;
-  h5SizeXS?: string;
-  baseWeight?: string;
-  h1Weight?: string;
-  h2Weight?: string;
-  h3Weight?: string;
-  h4Weight?: string;
-  h5Weight?: string;
-  baseAlign?: string;
-  h1Align?: string;
-  h2Align?: string;
-  h3Align?: string;
-  h4Align?: string;
-  h5Align?: string;
-  baseColor?: string;
-  h1Color?: string;
-  h2Color?: string;
-  h3Color?: string;
-  h4Color?: string;
-  h5Color?: string;
-  baseFamily?: string;
-  h1Family?: string;
-  h2Family?: string;
-  h3Family?: string;
-  h4Family?: string;
-  h5Family?: string;
-  baseMargin?: string;
-  h1Margin?: string;
-  h2Margin?: string;
-  h3Margin?: string;
-  h4Margin?: string;
-  h5Margin?: string;
-  baseLineHeight?: string;
-  h1LineHeight?: string;
-  h2LineHeight?: string;
-  h3LineHeight?: string;
-  h4LineHeight?: string;
-  h5LineHeight?: string;
-  baseStrongRate?: string;
-  h1StrongRate?: string;
-  h2StrongRate?: string;
-  h3StrongRate?: string;
-  h4StrongRate?: string;
-  h5StrongRate?: string;
-  baseLetterSpacing?: string;
-  h1LetterSpacing?: string;
-  h2LetterSpacing?: string;
-  h3LetterSpacing?: string;
-  h4LetterSpacing?: string;
-  h5LetterSpacing?: string;
-  children?: React.ReactNode;
-}
+export const initialPlainTextProps: PlainTextProps = {
+  margin: {
+    p: [1, 0, 1, 0],
+    h1: [2, 0, 1, 0],
+    h2: [2, 0, 1, 0],
+    h3: [2, 0, 1, 0],
+    h4: [2, 0, 1, 0],
+    h5: [2, 0, 1, 0],
+    ul: [2, 0, 1, 0],
+    ol: [2, 0, 1, 0],
+  },
+  fontSize: {
+    p: { xl: 1 },
+    h1: { xl: 2 },
+    h2: { xl: 1.75 },
+    h3: { xl: 1.5 },
+    h4: { xl: 1.25 },
+    h5: { xl: 1 },
+    ul: { xl: 1 },
+    ol: { xl: 1 },
+    a: { xl: 1 },
+    small: { xl: 0.8 },
+    strong: { xl: 1 },
+  },
+  color: {
+    p: "#333333",
+    h1: "#333333",
+    h2: "#333333",
+    h3: "#333333",
+    h4: "#333333",
+    h5: "#333333",
+    ul: "#333333",
+    ol: "#333333",
+    a: "#0000ee",
+    small: "#333333",
+    strong: "#ee0000",
+  },
+  fontWeight: {
+    p: 400,
+    h1: 700,
+    h2: 700,
+    h3: 700,
+    h4: 700,
+    h5: 700,
+    ul: 400,
+    ol: 400,
+    a: 400,
+    small: 400,
+    strong: 700,
+  },
+  fontFamily: {
+    p: "inherit",
+    h1: "inherit",
+    h2: "inherit",
+    h3: "inherit",
+    h4: "inherit",
+    h5: "inherit",
+    ul: "inherit",
+    ol: "inherit",
+    a: "inherit",
+    small: "inherit",
+    strong: "inherit",
+  },
+  lineHeight: {
+    p: 1.75,
+    h1: 1.75,
+    h2: 1.75,
+    h3: 1.75,
+    h4: 1.75,
+    h5: 1.75,
+    ul: 1.75,
+    ol: 1.75,
+    a: 1.75,
+    small: 1.75,
+    strong: 1.75,
+  },
+  textAlign: {
+    p: "left",
+    h1: "left",
+    h2: "left",
+    h3: "left",
+    h4: "left",
+    h5: "left",
+    ul: "left",
+    ol: "left",
+    a: "left",
+    small: "left",
+    strong: "left",
+  },
+  letterSpacing: {
+    p: "normal",
+    h1: "normal",
+    h2: "normal",
+    h3: "normal",
+    h4: "normal",
+    h5: "normal",
+    ul: "normal",
+    ol: "normal",
+    a: "normal",
+    small: "normal",
+    strong: "normal",
+  },
+  baseMargin: "1rem",
+  liPadding: 1,
+  baseLiPadding: "1rem",
+  mediaWidth: "100%",
+};
 
-export const PlainText = ({
-  text,
-  baseSizeXL,
-  h1SizeXL,
-  h2SizeXL,
-  h3SizeXL,
-  h4SizeXL,
-  h5SizeXL,
-  baseSizeL,
-  h1SizeL,
-  h2SizeL,
-  h3SizeL,
-  h4SizeL,
-  h5SizeL,
-  baseSizeM,
-  h1SizeM,
-  h2SizeM,
-  h3SizeM,
-  h4SizeM,
-  h5SizeM,
-  baseSizeS,
-  h1SizeS,
-  h2SizeS,
-  h3SizeS,
-  h4SizeS,
-  h5SizeS,
-  baseSizeXS,
-  h1SizeXS,
-  h2SizeXS,
-  h3SizeXS,
-  h4SizeXS,
-  h5SizeXS,
-  baseWeight,
-  h1Weight,
-  h2Weight,
-  h3Weight,
-  h4Weight,
-  h5Weight,
-  baseAlign,
-  h1Align,
-  h2Align,
-  h3Align,
-  h4Align,
-  h5Align,
-  baseColor,
-  h1Color,
-  h2Color,
-  h3Color,
-  h4Color,
-  h5Color,
-  baseFamily,
-  h1Family,
-  h2Family,
-  h3Family,
-  h4Family,
-  h5Family,
-  baseLineHeight,
-  h1LineHeight,
-  h2LineHeight,
-  h3LineHeight,
-  h4LineHeight,
-  h5LineHeight,
-  baseMargin,
-  h1Margin,
-  h2Margin,
-  h3Margin,
-  h4Margin,
-  h5Margin,
-  baseStrongRate,
-  h1StrongRate,
-  h2StrongRate,
-  h3StrongRate,
-  h4StrongRate,
-  h5StrongRate,
-  baseLetterSpacing,
-  h1LetterSpacing,
-  h2LetterSpacing,
-  h3LetterSpacing,
-  h4LetterSpacing,
-  h5LetterSpacing,
-  children,
-}: PlainTextProps) => {
-  const context = React.useContext(Config);
+export const PlainText = (props: PlainTextProps) => {
+  const initialProps = useContext(InitialPropsContext);
+  const viewPort = useContext(ViewPortContext);
 
-  let config: PlainTextConfigProps = defaultConfig;
-  if (context.plainText) {
-    config = {
-      ...config,
-      ...context.plainText,
+  const styles: TextTagStyle[] = textTagsAsString.map((tag: TextTag) => {
+    const margin = selectValueOfTag<[number, number, number, number]>(
+      initialProps.plainText.margin,
+      props.margin,
+      tag
+    );
+    const baseMargin = props.baseMargin || initialProps.plainText.baseMargin;
+
+    const fontSize = selectValueOfTagOfScreen<number>(
+      initialProps.plainText.fontSize,
+      props.fontSize,
+      tag,
+      viewPort.screen
+    );
+
+    const color = selectValueOfTag<string>(
+      initialProps.plainText.color,
+      props.color,
+      tag
+    );
+
+    const fontWeight = selectValueOfTag<number>(
+      initialProps.plainText.fontWeight,
+      props.fontWeight,
+      tag
+    );
+
+    const fontFamily = selectValueOfTag<string>(
+      initialProps.plainText.fontFamily,
+      props.fontFamily,
+      tag
+    );
+
+    const lineHeight = selectValueOfTag<number>(
+      initialProps.plainText.lineHeight,
+      props.lineHeight,
+      tag
+    );
+
+    const textAlign = selectValueOfTag<string>(
+      initialProps.plainText.textAlign,
+      props.textAlign,
+      tag
+    );
+
+    const letterSpacing = selectValueOfTag<string>(
+      initialProps.plainText.letterSpacing,
+      props.letterSpacing,
+      tag
+    );
+
+    return {
+      margin:
+        margin && baseMargin
+          ? `calc(${margin[0]} * ${baseMargin}) calc(${margin[1]} * ${baseMargin}) calc(${margin[2]} * ${baseMargin}) calc(${margin[3]} * ${baseMargin})`
+          : "inherit",
+      fontSize: fontSize ? `${fontSize}rem` : "inherit",
+      color: color || "transparent",
+      fontWeight: fontWeight || "inherit",
+      fontFamily: fontFamily || "inherit",
+      lineHeight: lineHeight || "inherit",
+      textAlign: textAlign || "inherit",
+      letterSpacing: letterSpacing || "inherit",
     };
-  }
+  });
+
+  const liPadding = props.liPadding || initialProps.plainText.liPadding;
+  const baseLiPadding =
+    props.baseLiPadding || initialProps.plainText.baseLiPadding;
+
+  const mediaWidth = props.mediaWidth || initialProps.plainText.mediaWidth;
 
   return (
-    <Component
-      baseSizeXL={baseSizeXL}
-      h1SizeXL={h1SizeXL}
-      h2SizeXL={h2SizeXL}
-      h3SizeXL={h3SizeXL}
-      h4SizeXL={h4SizeXL}
-      h5SizeXL={h5SizeXL}
-      baseSizeL={baseSizeL}
-      h1SizeL={h1SizeL}
-      h2SizeL={h2SizeL}
-      h3SizeL={h3SizeL}
-      h4SizeL={h4SizeL}
-      h5SizeL={h5SizeL}
-      baseSizeM={baseSizeM}
-      h1SizeM={h1SizeM}
-      h2SizeM={h2SizeM}
-      h3SizeM={h3SizeM}
-      h4SizeM={h4SizeM}
-      h5SizeM={h5SizeM}
-      baseSizeS={baseSizeS}
-      h1SizeS={h1SizeS}
-      h2SizeS={h2SizeS}
-      h3SizeS={h3SizeS}
-      h4SizeS={h4SizeS}
-      h5SizeS={h5SizeS}
-      baseSizeXS={baseSizeXS}
-      h1SizeXS={h1SizeXS}
-      h2SizeXS={h2SizeXS}
-      h3SizeXS={h3SizeXS}
-      h4SizeXS={h4SizeXS}
-      h5SizeXS={h5SizeXS}
-      baseWeight={baseWeight}
-      h1Weight={h1Weight}
-      h2Weight={h2Weight}
-      h3Weight={h3Weight}
-      h4Weight={h4Weight}
-      h5Weight={h5Weight}
-      baseAlign={baseAlign}
-      h1Align={h1Align}
-      h2Align={h2Align}
-      h3Align={h3Align}
-      h4Align={h4Align}
-      h5Align={h5Align}
-      baseColor={baseColor}
-      h1Color={h1Color}
-      h2Color={h2Color}
-      h3Color={h3Color}
-      h4Color={h4Color}
-      h5Color={h5Color}
-      baseFamily={baseFamily}
-      h1Family={h1Family}
-      h2Family={h2Family}
-      h3Family={h3Family}
-      h4Family={h4Family}
-      h5Family={h5Family}
-      baseLineHeight={baseLineHeight}
-      h1LineHeight={h1LineHeight}
-      h2LineHeight={h2LineHeight}
-      h3LineHeight={h3LineHeight}
-      h4LineHeight={h4LineHeight}
-      h5LineHeight={h5LineHeight}
-      baseMargin={baseMargin}
-      h1Margin={h1Margin}
-      h2Margin={h2Margin}
-      h3Margin={h3Margin}
-      h4Margin={h4Margin}
-      h5Margin={h5Margin}
-      baseStrongRate={baseStrongRate}
-      h1StrongRate={h1StrongRate}
-      h2StrongRate={h2StrongRate}
-      h3StrongRate={h3StrongRate}
-      h4StrongRate={h4StrongRate}
-      h5StrongRate={h5StrongRate}
-      baseLetterSpacing={baseLetterSpacing}
-      h1LetterSpacing={h1LetterSpacing}
-      h2LetterSpacing={h2LetterSpacing}
-      h3LetterSpacing={h3LetterSpacing}
-      h4LetterSpacing={h4LetterSpacing}
-      h5LetterSpacing={h5LetterSpacing}
-      config={config}
+    <PlainTextComponent
+      pStyle={styles[0]}
+      h1Style={styles[1]}
+      h2Style={styles[2]}
+      h3Style={styles[3]}
+      h4Style={styles[4]}
+      h5Style={styles[5]}
+      ulStyle={styles[6]}
+      olStyle={styles[7]}
+      aStyle={styles[8]}
+      smallStyle={styles[9]}
+      strongStyle={styles[10]}
+      liPadding={
+        liPadding && baseLiPadding
+          ? `calc(${liPadding} * ${baseLiPadding})`
+          : "inherit"
+      }
+      mediaWidth={mediaWidth || "inherit"}
     >
-      {text ? <div dangerouslySetInnerHTML={{ __html: text }}></div> : children}
-    </Component>
+      {props.text ? (
+        <div dangerouslySetInnerHTML={{ __html: props.text }}></div>
+      ) : (
+        props.children
+      )}
+    </PlainTextComponent>
   );
 };
 
-interface ComponentProps {
-  size?: string;
-  baseSizeXL?: string;
-  h1SizeXL?: string;
-  h2SizeXL?: string;
-  h3SizeXL?: string;
-  h4SizeXL?: string;
-  h5SizeXL?: string;
-  baseSizeL?: string;
-  h1SizeL?: string;
-  h2SizeL?: string;
-  h3SizeL?: string;
-  h4SizeL?: string;
-  h5SizeL?: string;
-  baseSizeM?: string;
-  h1SizeM?: string;
-  h2SizeM?: string;
-  h3SizeM?: string;
-  h4SizeM?: string;
-  h5SizeM?: string;
-  baseSizeS?: string;
-  h1SizeS?: string;
-  h2SizeS?: string;
-  h3SizeS?: string;
-  h4SizeS?: string;
-  h5SizeS?: string;
-  baseSizeXS?: string;
-  h1SizeXS?: string;
-  h2SizeXS?: string;
-  h3SizeXS?: string;
-  h4SizeXS?: string;
-  h5SizeXS?: string;
-  baseWeight?: string;
-  h1Weight?: string;
-  h2Weight?: string;
-  h3Weight?: string;
-  h4Weight?: string;
-  h5Weight?: string;
-  baseAlign?: string;
-  h1Align?: string;
-  h2Align?: string;
-  h3Align?: string;
-  h4Align?: string;
-  h5Align?: string;
-  baseColor?: string;
-  h1Color?: string;
-  h2Color?: string;
-  h3Color?: string;
-  h4Color?: string;
-  h5Color?: string;
-  baseFamily?: string;
-  h1Family?: string;
-  h2Family?: string;
-  h3Family?: string;
-  h4Family?: string;
-  h5Family?: string;
-  baseLineHeight?: string;
-  h1LineHeight?: string;
-  h2LineHeight?: string;
-  h3LineHeight?: string;
-  h4LineHeight?: string;
-  h5LineHeight?: string;
-  baseMargin?: string;
-  h1Margin?: string;
-  h2Margin?: string;
-  h3Margin?: string;
-  h4Margin?: string;
-  h5Margin?: string;
-  baseStrongRate?: string;
-  h1StrongRate?: string;
-  h2StrongRate?: string;
-  h3StrongRate?: string;
-  h4StrongRate?: string;
-  h5StrongRate?: string;
-  baseLetterSpacing?: string;
-  h1LetterSpacing?: string;
-  h2LetterSpacing?: string;
-  h3LetterSpacing?: string;
-  h4LetterSpacing?: string;
-  h5LetterSpacing?: string;
-  config: PlainTextConfigProps;
-}
+type TextTagStyle = {
+  margin: string;
+  fontSize: string;
+  color: string;
+  fontWeight: string | number;
+  fontFamily: string;
+  lineHeight: string | number;
+  textAlign: string;
+  letterSpacing: string;
+};
 
-const Component = styled.div<ComponentProps>`
+type PlainTextComponentProps = {
+  pStyle: TextTagStyle;
+  h1Style: TextTagStyle;
+  h2Style: TextTagStyle;
+  h3Style: TextTagStyle;
+  h4Style: TextTagStyle;
+  h5Style: TextTagStyle;
+  ulStyle: TextTagStyle;
+  olStyle: TextTagStyle;
+  aStyle: TextTagStyle;
+  smallStyle: TextTagStyle;
+  strongStyle: TextTagStyle;
+  liPadding: string;
+  mediaWidth: string;
+};
+
+const PlainTextComponent = styled.div<PlainTextComponentProps>`
   width: 100%;
 
-  * {
-    margin: ${(props) => props.baseMargin || props.config.baseMargin};
-    font-size: ${(props) => props.baseSizeXL || props.config.baseSize.xl};
-    color: ${(props) => props.baseColor || props.config.baseColor};
-    text-align: ${(props) => props.baseAlign || props.config.baseAlign};
-    font-family: ${(props) => props.baseFamily || props.config.baseFamily};
-    font-weight: ${(props) => props.baseWeight || props.config.baseWeight};
-    line-height: ${(props) => props.baseLineHeight || props.config.baseLineHeight};
-    letter-spacing: ${(props) => props.baseLetterSpacing || props.config.baseLetterSpacing};
-  }
-
-  li {
-    margin: 0;
-  }
-
-  strong {
-    font-size: ${(props) => props.baseStrongRate || props.config.baseStrongRate};
+  p {
+    margin: ${(p) => p.pStyle.margin};
+    font-size: ${(p) => p.pStyle.fontSize};
+    color: ${(p) => p.pStyle.color};
+    font-weight: ${(p) => p.pStyle.fontWeight};
+    font-family: ${(p) => p.pStyle.fontFamily};
+    line-height: ${(p) => p.pStyle.lineHeight};
+    text-align: ${(p) => p.pStyle.textAlign};
+    letter-spacing: ${(p) => p.pStyle.letterSpacing};
   }
 
   h1 {
-    margin: ${(props) => props.h1Margin || props.config.h1Margin};
-    font-size: ${(props) => props.h1SizeXL || props.config.h1Size.xl};
-    color: ${(props) => props.h1Color || props.config.h1Color};
-    text-align: ${(props) => props.h1Align || props.config.h1Align};
-    font-family: ${(props) => props.h1Family || props.config.h1Family};
-    font-weight: ${(props) => props.h1Weight || props.config.h1Weight};
-    line-height: ${(props) => props.h1LineHeight || props.config.h1LineHeight};
-    letter-spacing: ${(props) => props.h1LetterSpacing || props.config.h1LetterSpacing};
-
-    strong {
-      font-size: ${(props) => props.h1StrongRate || props.config.h1StrongRate};
-    }
+    margin: ${(p) => p.h1Style.margin};
+    font-size: ${(p) => p.h1Style.fontSize};
+    color: ${(p) => p.h1Style.color};
+    font-weight: ${(p) => p.h1Style.fontWeight};
+    font-family: ${(p) => p.h1Style.fontFamily};
+    line-height: ${(p) => p.h1Style.lineHeight};
+    text-align: ${(p) => p.h1Style.textAlign};
+    letter-spacing: ${(p) => p.h1Style.letterSpacing};
   }
 
   h2 {
-    margin: ${(props) => props.h2Margin || props.config.h2Margin};
-    font-size: ${(props) => props.h2SizeXL || props.config.h2Size.xl};
-    color: ${(props) => props.h2Color || props.config.h2Color};
-    text-align: ${(props) => props.h2Align || props.config.h2Align};
-    font-family: ${(props) => props.h2Family || props.config.h2Family};
-    font-weight: ${(props) => props.h2Weight || props.config.h2Weight};
-    line-height: ${(props) => props.h2LineHeight || props.config.h2LineHeight};
-    letter-spacing: ${(props) => props.h2LetterSpacing || props.config.h2LetterSpacing};
-
-    strong {
-      font-size: ${(props) => props.h2StrongRate || props.config.h2StrongRate};
-    }
+    margin: ${(p) => p.h2Style.margin};
+    font-size: ${(p) => p.h2Style.fontSize};
+    color: ${(p) => p.h2Style.color};
+    font-weight: ${(p) => p.h2Style.fontWeight};
+    font-family: ${(p) => p.h2Style.fontFamily};
+    line-height: ${(p) => p.h2Style.lineHeight};
+    text-align: ${(p) => p.h2Style.textAlign};
+    letter-spacing: ${(p) => p.h2Style.letterSpacing};
   }
 
   h3 {
-    margin: ${(props) => props.h3Margin || props.config.h3Margin};
-    font-size: ${(props) => props.h3SizeXL || props.config.h3Size.xl};
-    color: ${(props) => props.h3Color || props.config.h3Color};
-    text-align: ${(props) => props.h3Align || props.config.h3Align};
-    font-family: ${(props) => props.h3Family || props.config.h3Family};
-    font-weight: ${(props) => props.h3Weight || props.config.h3Weight};
-    line-height: ${(props) => props.h3LineHeight || props.config.h3LineHeight};
-    letter-spacing: ${(props) => props.h3LetterSpacing || props.config.h3LetterSpacing};
-
-    strong {
-      font-size: ${(props) => props.h3StrongRate || props.config.h3StrongRate};
-    }
+    margin: ${(p) => p.h3Style.margin};
+    font-size: ${(p) => p.h3Style.fontSize};
+    color: ${(p) => p.h3Style.color};
+    font-weight: ${(p) => p.h3Style.fontWeight};
+    font-family: ${(p) => p.h3Style.fontFamily};
+    line-height: ${(p) => p.h3Style.lineHeight};
+    text-align: ${(p) => p.h3Style.textAlign};
+    letter-spacing: ${(p) => p.h3Style.letterSpacing};
   }
 
   h4 {
-    margin: ${(props) => props.h4Margin || props.config.h4Margin};
-    font-size: ${(props) => props.h4SizeXL || props.config.h4Size.xl};
-    color: ${(props) => props.h4Color || props.config.h4Color};
-    text-align: ${(props) => props.h4Align || props.config.h4Align};
-    font-family: ${(props) => props.h4Family || props.config.h4Family};
-    font-weight: ${(props) => props.h4Weight || props.config.h4Weight};
-    line-height: ${(props) => props.h4LineHeight || props.config.h4LineHeight};
-    letter-spacing: ${(props) => props.h4LetterSpacing || props.config.h4LetterSpacing};
-
-    strong {
-      font-size: ${(props) => props.h4StrongRate || props.config.h4StrongRate};
-    }
+    margin: ${(p) => p.h4Style.margin};
+    font-size: ${(p) => p.h4Style.fontSize};
+    color: ${(p) => p.h4Style.color};
+    font-weight: ${(p) => p.h4Style.fontWeight};
+    font-family: ${(p) => p.h4Style.fontFamily};
+    line-height: ${(p) => p.h4Style.lineHeight};
+    text-align: ${(p) => p.h4Style.textAlign};
+    letter-spacing: ${(p) => p.h4Style.letterSpacing};
   }
 
   h5 {
-    margin: ${(props) => props.h5Margin || props.config.h5Margin};
-    font-size: ${(props) => props.h5SizeXL || props.config.h5Size.xl};
-    color: ${(props) => props.h5Color || props.config.h5Color};
-    text-align: ${(props) => props.h5Align || props.config.h5Align};
-    font-family: ${(props) => props.h5Family || props.config.h5Family};
-    font-weight: ${(props) => props.h5Weight || props.config.h5Weight};
-    line-height: ${(props) => props.h5LineHeight || props.config.h5LineHeight};
-    letter-spacing: ${(props) => props.h5LetterSpacing || props.config.h5LetterSpacing};
+    margin: ${(p) => p.h5Style.margin};
+    font-size: ${(p) => p.h5Style.fontSize};
+    color: ${(p) => p.h5Style.color};
+    font-weight: ${(p) => p.h5Style.fontWeight};
+    font-family: ${(p) => p.h5Style.fontFamily};
+    line-height: ${(p) => p.h5Style.lineHeight};
+    text-align: ${(p) => p.h5Style.textAlign};
+    letter-spacing: ${(p) => p.h5Style.letterSpacing};
+  }
 
-    strong {
-      font-size: ${(props) => props.h5StrongRate || props.config.h5StrongRate};
-    }
+  ul {
+    margin: ${(p) => p.ulStyle.margin};
+    font-size: ${(p) => p.ulStyle.fontSize};
+    color: ${(p) => p.ulStyle.color};
+    font-weight: ${(p) => p.ulStyle.fontWeight};
+    font-family: ${(p) => p.ulStyle.fontFamily};
+    line-height: ${(p) => p.ulStyle.lineHeight};
+    text-align: ${(p) => p.ulStyle.textAlign};
+    letter-spacing: ${(p) => p.ulStyle.letterSpacing};
+  }
+
+  ol {
+    margin: ${(p) => p.olStyle.margin};
+    font-size: ${(p) => p.olStyle.fontSize};
+    color: ${(p) => p.olStyle.color};
+    font-weight: ${(p) => p.olStyle.fontWeight};
+    font-family: ${(p) => p.olStyle.fontFamily};
+    line-height: ${(p) => p.olStyle.lineHeight};
+    text-align: ${(p) => p.olStyle.textAlign};
+    letter-spacing: ${(p) => p.olStyle.letterSpacing};
+  }
+
+  a {
+    margin: ${(p) => p.aStyle.margin};
+    font-size: ${(p) => p.aStyle.fontSize};
+    color: ${(p) => p.aStyle.color};
+    font-weight: ${(p) => p.aStyle.fontWeight};
+    font-family: ${(p) => p.aStyle.fontFamily};
+    line-height: ${(p) => p.aStyle.lineHeight};
+    text-align: ${(p) => p.aStyle.textAlign};
+    letter-spacing: ${(p) => p.aStyle.letterSpacing};
+  }
+
+  small {
+    margin: ${(p) => p.smallStyle.margin};
+    font-size: ${(p) => p.smallStyle.fontSize};
+    color: ${(p) => p.smallStyle.color};
+    font-weight: ${(p) => p.smallStyle.fontWeight};
+    font-family: ${(p) => p.smallStyle.fontFamily};
+    line-height: ${(p) => p.smallStyle.lineHeight};
+    text-align: ${(p) => p.smallStyle.textAlign};
+    letter-spacing: ${(p) => p.smallStyle.letterSpacing};
+  }
+
+  strong {
+    margin: ${(p) => p.strongStyle.margin};
+    font-size: ${(p) => p.strongStyle.fontSize};
+    color: ${(p) => p.strongStyle.color};
+    font-weight: ${(p) => p.strongStyle.fontWeight};
+    font-family: ${(p) => p.strongStyle.fontFamily};
+    line-height: ${(p) => p.strongStyle.lineHeight};
+    text-align: ${(p) => p.strongStyle.textAlign};
+    letter-spacing: ${(p) => p.strongStyle.letterSpacing};
+  }
+
+  li {
+    padding: ${(p) => p.liPadding};
   }
 
   ul,
@@ -609,8 +400,11 @@ const Component = styled.div<ComponentProps>`
   }
 
   figure,
-  img {
+  img,
+  video,
+  iframe {
     max-width: 100%;
+    width: ${(p) => p.mediaWidth};
     vertical-align: middle;
   }
 
@@ -620,161 +414,5 @@ const Component = styled.div<ComponentProps>`
 
   > *:last-child {
     margin-bottom: 0;
-  }
-
-  @media only screen and (max-width: ${screen.l}px) {
-    * {
-      font-size: ${(props) => props.baseSizeL || props.baseSizeXL || props.config.baseSize.l};
-    }
-
-    h1 {
-      font-size: ${(props) => props.h1SizeL || props.h1SizeXL || props.config.h1Size.l};
-    }
-
-    h2 {
-      font-size: ${(props) => props.h2SizeL || props.h2SizeXL || props.config.h2Size.l};
-    }
-
-    h3 {
-      font-size: ${(props) => props.h3SizeL || props.h3SizeXL || props.config.h3Size.l};
-    }
-
-    h4 {
-      font-size: ${(props) => props.h4SizeL || props.h4SizeXL || props.config.h4Size.l};
-    }
-
-    h5 {
-      font-size: ${(props) => props.h5SizeL || props.h5SizeXL || props.config.h5Size.l};
-    }
-  }
-
-  @media only screen and (max-width: ${screen.m}px) {
-    * {
-      font-size: ${(props) =>
-        props.baseSizeM || props.baseSizeL || props.baseSizeXL || props.config.baseSize.m};
-    }
-
-    h1 {
-      font-size: ${(props) =>
-        props.h1SizeM || props.h1SizeL || props.h1SizeXL || props.config.h1Size.m};
-    }
-
-    h2 {
-      font-size: ${(props) =>
-        props.h2SizeM || props.h2SizeL || props.h2SizeXL || props.config.h2Size.m};
-    }
-
-    h3 {
-      font-size: ${(props) =>
-        props.h3SizeM || props.h3SizeL || props.h3SizeXL || props.config.h3Size.m};
-    }
-
-    h4 {
-      font-size: ${(props) =>
-        props.h4SizeM || props.h4SizeL || props.h4SizeXL || props.config.h4Size.m};
-    }
-
-    h5 {
-      font-size: ${(props) =>
-        props.h5SizeM || props.h5SizeL || props.h5SizeXL || props.config.h5Size.m};
-    }
-  }
-
-  @media only screen and (max-width: ${screen.s}px) {
-    * {
-      font-size: ${(props) =>
-        props.baseSizeS ||
-        props.baseSizeM ||
-        props.baseSizeL ||
-        props.baseSizeXL ||
-        props.config.baseSize.s};
-    }
-
-    h1 {
-      font-size: ${(props) =>
-        props.h1SizeS || props.h1SizeM || props.h1SizeL || props.h1SizeXL || props.config.h1Size.s};
-    }
-
-    h2 {
-      font-size: ${(props) =>
-        props.h2SizeS || props.h2SizeM || props.h2SizeL || props.h2SizeXL || props.config.h2Size.s};
-    }
-
-    h3 {
-      font-size: ${(props) =>
-        props.h3SizeS || props.h3SizeM || props.h3SizeL || props.h3SizeXL || props.config.h3Size.s};
-    }
-
-    h4 {
-      font-size: ${(props) =>
-        props.h4SizeS || props.h4SizeM || props.h4SizeL || props.h4SizeXL || props.config.h4Size.s};
-    }
-
-    h5 {
-      font-size: ${(props) =>
-        props.h5SizeS || props.h5SizeM || props.h5SizeL || props.h5SizeXL || props.config.h5Size.s};
-    }
-  }
-
-  @media only screen and (max-width: ${screen.xs}px) {
-    * {
-      font-size: ${(props) =>
-        props.baseSizeXS ||
-        props.baseSizeS ||
-        props.baseSizeM ||
-        props.baseSizeL ||
-        props.baseSizeXL ||
-        props.config.baseSize.xs};
-    }
-
-    h1 {
-      font-size: ${(props) =>
-        props.h1SizeXS ||
-        props.h1SizeS ||
-        props.h1SizeM ||
-        props.h1SizeL ||
-        props.h1SizeXL ||
-        props.config.h1Size.xs};
-    }
-
-    h2 {
-      font-size: ${(props) =>
-        props.h2SizeXS ||
-        props.h2SizeS ||
-        props.h2SizeM ||
-        props.h2SizeL ||
-        props.h2SizeXL ||
-        props.config.h2Size.xs};
-    }
-
-    h3 {
-      font-size: ${(props) =>
-        props.h3SizeXS ||
-        props.h3SizeS ||
-        props.h3SizeM ||
-        props.h3SizeL ||
-        props.h3SizeXL ||
-        props.config.h3Size.xs};
-    }
-
-    h4 {
-      font-size: ${(props) =>
-        props.h4SizeXS ||
-        props.h4SizeS ||
-        props.h4SizeM ||
-        props.h4SizeL ||
-        props.h4SizeXL ||
-        props.config.h4Size.xs};
-    }
-
-    h5 {
-      font-size: ${(props) =>
-        props.h5SizeXS ||
-        props.h5SizeS ||
-        props.h5SizeM ||
-        props.h5SizeL ||
-        props.h5SizeXL ||
-        props.config.h5Size.xs};
-    }
   }
 `;

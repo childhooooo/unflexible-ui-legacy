@@ -1,4 +1,3 @@
-import React from 'react';
 import { Story, Meta } from '@storybook/react';
 import { Stacked, StackedProps } from './index';
 import { UnflexibleProvider } from '../UnflexibleProvider';
@@ -10,7 +9,7 @@ export default {
 
 const Template: Story<StackedProps> = (args) => {
   return (
-    <UnflexibleProvider config={{}}>
+    <UnflexibleProvider>
       <Stacked {...args} />
     </UnflexibleProvider>
   );

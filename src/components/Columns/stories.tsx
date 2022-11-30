@@ -1,4 +1,3 @@
-import React from 'react';
 import { Story, Meta } from '@storybook/react';
 import { Columns, ColumnsProps } from './index';
 import { UnflexibleProvider } from '../UnflexibleProvider';
@@ -10,7 +9,7 @@ export default {
 
 const Template: Story<ColumnsProps> = (args) => {
   return (
-    <UnflexibleProvider config={{}}>
+    <UnflexibleProvider>
       <Columns {...args} />
     </UnflexibleProvider>
   );

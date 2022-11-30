@@ -1,16 +1,15 @@
-import React from 'react';
-import { Story, Meta } from '@storybook/react';
-import { Block, BlockProps } from './index';
-import { UnflexibleProvider } from '../UnflexibleProvider';
+import { Story, Meta } from "@storybook/react";
+import { Block, BlockProps } from "./index";
+import { UnflexibleProvider } from "../UnflexibleProvider";
 
 export default {
-  title: 'Block',
+  title: "Block",
   component: Block,
 } as Meta;
 
 const Template: Story<BlockProps> = (args) => {
   return (
-    <UnflexibleProvider config={{}}>
+    <UnflexibleProvider>
       <Block {...args} />
     </UnflexibleProvider>
   );

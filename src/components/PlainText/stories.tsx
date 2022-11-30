@@ -1,4 +1,3 @@
-import React from 'react';
 import { Story, Meta } from '@storybook/react';
 import { PlainText, PlainTextProps } from './index';
 import { UnflexibleProvider } from '../UnflexibleProvider';
@@ -9,7 +8,7 @@ export default {
 } as Meta;
 
 const Template: Story<PlainTextProps> = (args) => (
-  <UnflexibleProvider config={{}}>
+  <UnflexibleProvider>
     <PlainText {...args} />
   </UnflexibleProvider>
 );
