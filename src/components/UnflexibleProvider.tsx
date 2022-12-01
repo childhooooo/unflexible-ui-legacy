@@ -105,7 +105,13 @@ export const UnflexibleProvider = ({
   };
 
   const c = { ...defaultConfig, ...config };
-  const i = { ...defaultInitialProps, ...initialProps };
+  const i = {
+    block: { ...defaultInitialProps.block, ...initialProps?.block },
+    columns: { ...defaultInitialProps.columns, ...initialProps?.columns },
+    plainText: { ...defaultInitialProps.plainText, ...initialProps?.plainText },
+    stacked: { ...defaultInitialProps.stacked, ...initialProps?.stacked },
+    wrap: { ...defaultInitialProps.wrap, ...initialProps?.wrap },
+  };
   const [width, setWidth] = useState(0);
   const [screen, setScreen] = useState(getScreen(c.breakpoints, 0));
 
