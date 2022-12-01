@@ -22,6 +22,14 @@ export type Config = {
   fontSize: ValuesForScreens<string>;
 };
 
+export type PartialConfig = {
+  breakpoints?: [number, number, number, number];
+  textColor?: string;
+  fontFamily?: string;
+  lineHeight?: number;
+  fontSize?: ValuesForScreens<string>;
+};
+
 const defaultConfig: Config = {
   breakpoints: [481, 768, 1069, 1442],
   textColor: "#333333",
@@ -36,6 +44,14 @@ export type InitialProps = {
   plainText: PlainTextProps;
   stacked: StackedProps;
   wrap: WrapProps;
+};
+
+export type PartialInitialProps = {
+  block?: BlockProps;
+  columns?: ColumnsProps;
+  plainText?: PlainTextProps;
+  stacked?: StackedProps;
+  wrap?: WrapProps;
 };
 
 export type ViewPort = {
@@ -70,8 +86,8 @@ function debounce<F extends (...args: Parameters<F>) => ReturnType<F>>(
 }
 
 export type UnflexibleProviderProps = {
-  config?: Config;
-  initialProps?: InitialProps;
+  config?: PartialConfig;
+  initialProps?: PartialInitialProps;
   children?: ReactNode;
 };
 
@@ -80,7 +96,7 @@ export const UnflexibleProvider = ({
   initialProps,
   children,
 }: UnflexibleProviderProps) => {
-  const defaultInitialProps = {
+  const defaultInitialProps: InitialProps = {
     block: initialBlockProps,
     columns: initialColumnsProps,
     plainText: initialPlainTextProps,
