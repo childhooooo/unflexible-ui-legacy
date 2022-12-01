@@ -25,6 +25,22 @@ export const Block = (props: BlockProps) => {
   const initialProps = useContext(InitialPropsContext);
   const viewPort = useContext(ViewPortContext);
 
+  let grow = 0;
+  if (initialProps.block.grow !== undefined) {
+    grow = initialProps.block.grow;
+  }
+  if (props.grow !== undefined) {
+    grow = props.grow;
+  }
+
+  let shrink = 0;
+  if (initialProps.block.shrink !== undefined) {
+    shrink = initialProps.block.shrink;
+  }
+  if (props.shrink !== undefined) {
+    shrink = props.shrink;
+  }
+
   return (
     <BlockComponent
       width={
@@ -32,15 +48,15 @@ export const Block = (props: BlockProps) => {
           initialProps.block.width,
           props.width,
           viewPort.screen
-        ) || "inherit"
+        ) || "auto"
       }
-      maxWidth={props.maxWidth || "inherit"}
+      maxWidth={props.maxWidth || "100%"}
       height={
         selectValueOfScreen<string>(
           initialProps.block.height,
           props.height,
           viewPort.screen
-        ) || "inherit"
+        ) || "auto"
       }
       padding={
         selectValueOfScreen<[number, number, number, number]>(
@@ -50,8 +66,8 @@ export const Block = (props: BlockProps) => {
         ) || [0, 0, 0, 0]
       }
       fixRatio={props.fixRatio || initialProps.block.fixRatio || false}
-      shrink={props.shrink || initialProps.block.shrink || "inherit"}
-      grow={props.grow || initialProps.block.grow || "inherit"}
+      shrink={shrink}
+      grow={grow}
       color={props.color || initialProps.block.color || "transparent"}
       basePadding={props.basePadding || initialProps.block.basePadding || "0px"}
     >
@@ -66,8 +82,8 @@ type BlockComponentProps = {
   height: string;
   padding: [number, number, number, number];
   fixRatio: boolean;
-  shrink: number | string;
-  grow: number | string;
+  shrink: number;
+  grow: number;
   color: string;
   basePadding: string;
 };
@@ -81,10 +97,11 @@ const BlockComponent = styled.div<BlockComponentProps>`
   > div {
     position: ${(p) => (p.fixRatio ? "absolute" : "relative")};
     height: ${(p) => p.height};
+    width: ${(p) => (p.fixRatio ? "100%" : p.width)};
+    max-width: 100%;
     top: ${(p) => (p.fixRatio ? 0 : "auto")};
     left: ${(p) => (p.fixRatio ? 0 : "auto")};
     height: ${(p) => (p.fixRatio ? "100%" : p.height)};
-    width: ${(p) => p.width};
     padding: calc(${(p) => p.basePadding} * ${(p) => p.padding[0]})
       calc(${(p) => p.basePadding} * ${(p) => p.padding[1]})
       calc(${(p) => p.basePadding} * ${(p) => p.padding[2]})
@@ -96,6 +113,7 @@ const BlockComponent = styled.div<BlockComponentProps>`
     position: relative;
     display: ${(p) => (p.fixRatio ? "block" : "none")};
     content: "";
+    width: ${(p) => (p.fixRatio ? p.width : "auto")};
     padding-top: ${(p) => p.height};
   }
 `;

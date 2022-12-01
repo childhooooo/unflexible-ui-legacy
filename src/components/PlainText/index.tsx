@@ -193,14 +193,14 @@ export const PlainText = (props: PlainTextProps) => {
       margin:
         margin && baseMargin
           ? `calc(${margin[0]} * ${baseMargin}) calc(${margin[1]} * ${baseMargin}) calc(${margin[2]} * ${baseMargin}) calc(${margin[3]} * ${baseMargin})`
-          : "inherit",
-      fontSize: fontSize ? `${fontSize}rem` : "inherit",
+          : "auto",
+      fontSize: fontSize ? `${fontSize}rem` : "auto",
       color: color || "transparent",
-      fontWeight: fontWeight || "inherit",
-      fontFamily: fontFamily || "inherit",
-      lineHeight: lineHeight || "inherit",
-      textAlign: textAlign || "inherit",
-      letterSpacing: letterSpacing || "inherit",
+      fontWeight: fontWeight || "auto",
+      fontFamily: fontFamily || "auto",
+      lineHeight: lineHeight || "auto",
+      textAlign: textAlign || "auto",
+      letterSpacing: letterSpacing || "auto",
     };
   });
 
@@ -226,9 +226,9 @@ export const PlainText = (props: PlainTextProps) => {
       liPadding={
         liPadding && baseLiPadding
           ? `calc(${liPadding} * ${baseLiPadding})`
-          : "inherit"
+          : "auto"
       }
-      mediaWidth={mediaWidth || "inherit"}
+      mediaWidth={mediaWidth || "auto"}
     >
       {props.text ? (
         <div dangerouslySetInnerHTML={{ __html: props.text }}></div>

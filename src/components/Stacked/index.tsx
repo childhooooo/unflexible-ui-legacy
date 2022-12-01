@@ -51,7 +51,7 @@ export const Stacked = (props: StackedProps) => {
           initialProps.stacked.height,
           props.height,
           viewPort.screen
-        ) || "inherit"
+        ) || "auto"
       }
       image={props.image || initialProps.stacked.image || null}
       style={props.style || initialProps.stacked.style || null}

@@ -58,16 +58,16 @@ export const ViewPortContext = createContext<ViewPort>({
   screen: ScreenKind.XS,
 });
 
-const debounce = <T extends (...args: any[]) => unknown>(
-  callback: T,
-  delay = 250
-): ((...args: Parameters<T>) => void) => {
-  let timeoutId: NodeJS.Timeout;
-  return (...args) => {
-    clearTimeout(timeoutId);
-    timeoutId = setTimeout(() => callback(...args), delay);
+function debounce<F extends (...args: Parameters<F>) => ReturnType<F>>(
+  func: F,
+  delay: number
+): (...args: Parameters<F>) => void {
+  let timeout: NodeJS.Timeout;
+  return (...args: Parameters<F>): void => {
+    clearTimeout(timeout);
+    timeout = setTimeout(() => func(...args), delay);
   };
-};
+}
 
 export type UnflexibleProviderProps = {
   config?: Config;
@@ -93,16 +93,19 @@ export const UnflexibleProvider = ({
   const [width, setWidth] = useState(0);
   const [screen, setScreen] = useState(getScreen(c.breakpoints, 0));
 
-  useEffect(() => {
-    const handleResize = debounce(() => {
+  const setViewPort = () => {
+    if (window) {
       setWidth(window.innerWidth || 0);
       setScreen(getScreen(c.breakpoints, window.innerWidth || 0));
-    });
+    }
+  };
+  const handleResize = debounce(setViewPort, 250);
 
-    handleResize();
+  useEffect(() => {
+    setViewPort();
     window.addEventListener("resize", handleResize);
 
-    return window.removeEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
   }, []);
 
   return (

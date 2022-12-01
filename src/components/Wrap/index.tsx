@@ -30,7 +30,7 @@ export const Wrap = (props: WrapProps) => {
           initialProps.wrap.width,
           props.width,
           viewPort.screen
-        ) || "inherit"
+        ) || "auto"
       }
     >
       {props.children}

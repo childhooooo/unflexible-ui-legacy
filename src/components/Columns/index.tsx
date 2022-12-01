@@ -24,8 +24,8 @@ export const Columns = (props: ColumnsProps) => {
 
   return (
     <ColumnsComponent
-      align={props.align || initialProps.columns.align || "inherit"}
-      justify={props.justify || initialProps.columns.justify || "normal"}
+      align={props.align || initialProps.columns.align || "stretch"}
+      justify={props.justify || initialProps.columns.justify || "flex-start"}
       gap={
         selectValueOfScreen<number>(
           initialProps.columns.gap,
@@ -72,6 +72,6 @@ const ColumnsComponent = styled.div<ColumnsComponentProps>`
       (100% - ${p.repeat - 1} * ${p.baseGap} * ${p.gap}) /
         ${p.repeat}
     )`
-        : "inherit"};
+        : "auto"};
   }
 `;

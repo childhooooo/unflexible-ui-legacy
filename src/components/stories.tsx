@@ -12,6 +12,7 @@ const Test = () => {
         <Columns justify="center" gap={{ xl: 1 }} repeat={{ xl: 2, xs: 1 }}>
           <Block
             height={{ xl: "100%" }}
+            fixRatio
             padding={{ xl: [1, 1, 1, 1] }}
             color="#dddddd"
           >
