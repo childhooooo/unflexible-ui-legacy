@@ -157,16 +157,17 @@ const Component = styled.div<ComponentProps>`
       margin: 0;
       width: 100vw;
       overflow-x: hidden;
-      color: ${(p) => p.color};
-      font-size: ${(p) => p.fontSize};
-      font-family: ${(p) => p.fontFamily};
-      line-height: ${(p) => p.lineHeight};
     }
+  }
 
-    img {
-      object-fit: cover;
-      object-position: 50% 50%;
-      vertical-align: middle;
-    }
+  color: ${(p) => p.color};
+  font-size: ${(p) => p.fontSize};
+  font-family: ${(p) => p.fontFamily};
+  line-height: ${(p) => p.lineHeight};
+
+  img {
+    object-fit: cover;
+    object-position: 50% 50%;
+    vertical-align: middle;
   }
 `;
