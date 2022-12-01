@@ -96,17 +96,15 @@ export const UnflexibleProvider = ({
   );
 
   React.useEffect(() => {
-    if (window) {
-      const handleResize = debounce(() => {
-        setWidth(window.innerWidth || 0);
-        setScreen(getScreen(c.breakpoints, window.innerWidth || 0));
-      });
+    const handleResize = debounce(() => {
+      setWidth(window.innerWidth || 0);
+      setScreen(getScreen(c.breakpoints, window.innerWidth || 0));
+    });
 
-      handleResize();
-      window.addEventListener("resize", handleResize);
+    handleResize();
+    window.addEventListener("resize", handleResize);
 
-      return window.removeEventListener("resize", handleResize);
-    }
+    return window.removeEventListener("resize", handleResize);
   }, []);
 
   return (
