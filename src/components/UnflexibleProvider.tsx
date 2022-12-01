@@ -90,9 +90,9 @@ export const UnflexibleProvider = ({
 
   const c = { ...defaultConfig, ...config };
   const i = { ...defaultInitialProps, ...initialProps };
-  const [width, setWidth] = React.useState(window.innerWidth || 0);
+  const [width, setWidth] = React.useState(window?.innerWidth || 0);
   const [screen, setScreen] = React.useState(
-    getScreen(c.breakpoints, window.innerWidth || 0)
+    getScreen(c.breakpoints, window?.innerWidth || 0)
   );
 
   React.useEffect(() => {
