@@ -1,6 +1,6 @@
 {
   "name": "@unflexible/ui-core",
-  "version": "0.3.8",
+  "version": "0.3.9",
   "description": "Don't be flexible.",
   "main": "./dist/unflexible-ui-core.umd.js",
   "module": "./dist/unflexible-ui-core.es.js",
@@ -10,7 +10,7 @@
       "import": "./dist/unflexible-ui-core.es.js",
       "require": "./dist/unflexible-ui-core.umd.js"
     },
-    "./css": "./dist/index.css"
+    "./css": "./dist/style.css"
   },
   "sideEffects": [
     "*.css"
