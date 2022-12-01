@@ -1,5 +1,5 @@
 import "ress";
-import React from "react";
+import { ReactNode, createContext, useState, useEffect } from "react";
 import { styled } from "@linaria/react";
 import {
   Screen,
@@ -43,9 +43,9 @@ export type ViewPort = {
   screen: Screen;
 };
 
-export const ConfigContext = React.createContext<Config>(defaultConfig);
+export const ConfigContext = createContext<Config>(defaultConfig);
 
-export const InitialPropsContext = React.createContext<InitialProps>({
+export const InitialPropsContext = createContext<InitialProps>({
   block: {},
   columns: {},
   plainText: {},
@@ -53,7 +53,7 @@ export const InitialPropsContext = React.createContext<InitialProps>({
   wrap: {},
 });
 
-export const ViewPortContext = React.createContext<ViewPort>({
+export const ViewPortContext = createContext<ViewPort>({
   width: 0,
   screen: ScreenKind.XS,
 });
@@ -72,7 +72,7 @@ const debounce = <T extends (...args: any[]) => unknown>(
 export type UnflexibleProviderProps = {
   config?: Config;
   initialProps?: InitialProps;
-  children?: React.ReactNode;
+  children?: ReactNode;
 };
 
 export const UnflexibleProvider = ({
@@ -90,12 +90,10 @@ export const UnflexibleProvider = ({
 
   const c = { ...defaultConfig, ...config };
   const i = { ...defaultInitialProps, ...initialProps };
-  const [width, setWidth] = React.useState(window?.innerWidth || 0);
-  const [screen, setScreen] = React.useState(
-    getScreen(c.breakpoints, window?.innerWidth || 0)
-  );
+  const [width, setWidth] = useState(0);
+  const [screen, setScreen] = useState(getScreen(c.breakpoints, 0));
 
-  React.useEffect(() => {
+  useEffect(() => {
     const handleResize = debounce(() => {
       setWidth(window.innerWidth || 0);
       setScreen(getScreen(c.breakpoints, window.innerWidth || 0));
