@@ -4,3 +4,6 @@ export * from "./components/Stacked";
 export * from "./components/Block";
 export * from "./components/Columns";
 export * from "./components/PlainText";
+export * from "./lib/screen";
+export * from "./lib/textTag";
+export * from "./lib/util";
