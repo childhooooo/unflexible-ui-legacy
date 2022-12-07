@@ -166,10 +166,12 @@ const Component = styled.div<ComponentProps>`
     }
   }
 
-  color: ${(p) => p.color};
-  font-size: ${(p) => p.fontSize};
-  font-family: ${(p) => p.fontFamily};
-  line-height: ${(p) => p.lineHeight};
+  * {
+    color: ${(p) => p.color};
+    font-size: ${(p) => p.fontSize};
+    font-family: ${(p) => p.fontFamily};
+    line-height: ${(p) => p.lineHeight};
+  }
 
   img {
     object-fit: cover;
