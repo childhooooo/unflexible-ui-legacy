@@ -1,13 +1,7 @@
 import "ress";
 import React, { ReactNode, createContext, useState, useEffect } from "react";
 import { styled } from "@linaria/react";
-import {
-  Screen,
-  ScreenKind,
-  ValuesForScreens,
-  getScreen,
-  getValueOfScreen,
-} from "../lib/screen";
+import { Screen, ScreenKind, getScreen } from "../lib/screen";
 import { BlockProps, initialBlockProps } from "./Block";
 import { ColumnsProps, initialColumnsProps } from "./Columns";
 import { PlainTextProps, initialPlainTextProps } from "./PlainText";
@@ -19,7 +13,6 @@ export type Config = {
   textColor: string;
   fontFamily: string;
   lineHeight: number;
-  fontSize: ValuesForScreens<string>;
 };
 
 export type PartialConfig = {
@@ -27,7 +20,6 @@ export type PartialConfig = {
   textColor?: string;
   fontFamily?: string;
   lineHeight?: number;
-  fontSize?: ValuesForScreens<string>;
 };
 
 const defaultConfig: Config = {
@@ -35,7 +27,6 @@ const defaultConfig: Config = {
   textColor: "#333333",
   fontFamily: "sans-serif",
   lineHeight: 1.75,
-  fontSize: { xl: "100%", m: "87.5%" },
 };
 
 export type InitialProps = {
@@ -136,7 +127,6 @@ export const UnflexibleProvider = ({
         <ViewPortContext.Provider value={{ width, screen }}>
           <Component
             color={c.textColor}
-            fontSize={getValueOfScreen(c.fontSize, screen) || "100%"}
             fontFamily={c.fontFamily}
             lineHeight={c.lineHeight}
           >
@@ -150,7 +140,6 @@ export const UnflexibleProvider = ({
 
 type ComponentProps = {
   color: string;
-  fontSize: string;
   fontFamily: string;
   lineHeight: number;
 };
@@ -166,12 +155,9 @@ const Component = styled.div<ComponentProps>`
     }
   }
 
-  * {
-    color: ${(p) => p.color};
-    font-size: ${(p) => p.fontSize};
-    font-family: ${(p) => p.fontFamily};
-    line-height: ${(p) => p.lineHeight};
-  }
+  color: ${(p) => p.color};
+  font-family: ${(p) => p.fontFamily};
+  line-height: ${(p) => p.lineHeight};
 
   img {
     object-fit: cover;
