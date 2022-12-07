@@ -1,6 +1,6 @@
 {
   "name": "@unflexible/ui-core",
-  "version": "0.3.15",
+  "version": "0.3.16",
   "description": "Don't be flexible.",
   "main": "./dist/unflexible-ui-core.umd.js",
   "module": "./dist/unflexible-ui-core.es.js",
