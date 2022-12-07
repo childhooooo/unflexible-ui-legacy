@@ -45,7 +45,7 @@ const Test = () => {
           justify="center"
           gap={{ xl: 1 }}
           repeat={{ xl: 3, s: 1 }}
-          wrap="wrap"
+          wrap={{ xl: "wrap" }}
         >
           <Block
             height={{ xl: "100%" }}
@@ -82,7 +82,7 @@ const Test = () => {
       </Stacked>
 
       <Stacked padding={{ xl: [2, 2] }} color="#efefef" wrap>
-        <Columns justify="center" wrap="wrap">
+        <Columns justify="center" wrap={{ xl: "wrap" }}>
           <Block
             width={{ l: "900px", m: "450px" }}
             padding={{ xl: [1, 1, 1, 1] }}

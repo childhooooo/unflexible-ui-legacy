@@ -9,7 +9,7 @@ export type ColumnsProps = {
   justify?: string;
   gap?: ValuesForScreens<number>;
   repeat?: ValuesForScreens<number>;
-  wrap?: string;
+  wrap?: ValuesForScreens<string>;
   baseGap?: string;
   children?: ReactNode;
 };
@@ -40,7 +40,13 @@ export const Columns = (props: ColumnsProps) => {
           viewPort.screen
         ) || null
       }
-      wrap={props.wrap || initialProps.columns.wrap || "wrap"}
+      wrap={
+        selectValueOfScreen<string>(
+          initialProps.columns.wrap,
+          props.wrap,
+          viewPort.screen
+        ) || "wrap"
+      }
       baseGap={props.baseGap || initialProps.columns.baseGap || "0px"}
     >
       {props.children}
