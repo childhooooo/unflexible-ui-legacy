@@ -129,7 +129,7 @@ export const initialPlainTextProps: PlainTextProps = {
     strong: "normal",
   },
   baseMargin: "1rem",
-  liPadding: 1,
+  liPadding: 0.5,
   baseLiPadding: "1rem",
   mediaWidth: "100%",
 };
@@ -391,7 +391,7 @@ const PlainTextComponent = styled.div<PlainTextComponentProps>`
   }
 
   li {
-    padding: ${(p) => p.liPadding};
+    padding: ${(p) => p.liPadding} 0;
   }
 
   ul,
